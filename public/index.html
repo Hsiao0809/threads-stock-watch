@@ -6,28 +6,39 @@
   <title>Threads 台股提及分析</title>
   <style>
     :root {
-      --bg: #f7f8fa;
-      --panel: #ffffff;
-      --text: #172026;
-      --muted: #66737f;
-      --line: #d9e0e6;
-      --accent: #0f766e;
-      --accent-2: #7c3aed;
-      --warn: #b45309;
-      --bad: #b91c1c;
-      --good: #047857;
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #111827;
+      --panel-2: #162033;
+      --panel-3: #1d293b;
+      --text: #e5edf6;
+      --muted: #94a3b8;
+      --line: #263244;
+      --accent: #5eead4;
+      --accent-2: #c4b5fd;
+      --warn: #fbbf24;
+      --bad: #f87171;
+      --good: #34d399;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.08), transparent 28rem),
+        radial-gradient(circle at top right, rgba(196, 181, 253, 0.08), transparent 30rem),
+        var(--bg);
       color: var(--text);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       letter-spacing: 0;
     }
     header {
       border-bottom: 1px solid var(--line);
-      background: var(--panel);
+      background: rgba(17, 24, 39, 0.88);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     .wrap {
       width: min(1180px, calc(100% - 32px));
@@ -66,6 +77,7 @@
       border-radius: 8px;
       padding: 14px;
       min-height: 82px;
+      box-shadow: var(--shadow);
     }
     .metric .label {
       color: var(--muted);
@@ -93,6 +105,18 @@
       color: var(--text);
       font-size: 14px;
     }
+    input::placeholder {
+      color: #64748b;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.16);
+      outline: none;
+    }
+    option {
+      background: var(--panel);
+      color: var(--text);
+    }
     .layout {
       display: grid;
       grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
@@ -118,6 +142,7 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
     table {
       width: 100%;
@@ -134,11 +159,14 @@
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
-      background: #fbfcfd;
+      background: var(--panel-2);
     }
     tr:last-child td { border-bottom: 0; }
     tr[data-selected="true"] {
-      background: #edf7f6;
+      background: rgba(20, 184, 166, 0.16);
+    }
+    tbody tr:hover {
+      background: rgba(148, 163, 184, 0.08);
     }
     button.stock-row {
       appearance: none;
@@ -162,15 +190,15 @@
       min-height: 22px;
       padding: 2px 7px;
       border-radius: 999px;
-      background: #eef2f7;
-      color: #354454;
+      background: var(--panel-3);
+      color: #cbd5e1;
       font-size: 12px;
       white-space: nowrap;
     }
-    .badge.buy, .badge.limitUp, .badge.good { background: #dcfce7; color: var(--good); }
-    .badge.sell, .badge.limitDown, .badge.bad { background: #fee2e2; color: var(--bad); }
-    .badge.watch { background: #e0f2fe; color: #0369a1; }
-    .badge.regret { background: #fef3c7; color: var(--warn); }
+    .badge.buy, .badge.limitUp, .badge.good { background: rgba(16, 185, 129, 0.16); color: var(--good); }
+    .badge.sell, .badge.limitDown, .badge.bad { background: rgba(248, 113, 113, 0.16); color: var(--bad); }
+    .badge.watch { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; }
+    .badge.regret { background: rgba(251, 191, 36, 0.16); color: var(--warn); }
     .posts {
       display: grid;
       gap: 10px;
@@ -180,6 +208,7 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 14px;
+      box-shadow: var(--shadow);
     }
     article h2 {
       margin: 0 0 8px;
@@ -188,9 +217,15 @@
     }
     article p {
       margin: 10px 0 0;
-      color: #2a353d;
+      color: #d6dee8;
       line-height: 1.65;
       font-size: 14px;
+    }
+    mark {
+      background: rgba(251, 191, 36, 0.22);
+      color: #fde68a;
+      border-radius: 3px;
+      padding: 0 2px;
     }
     a {
       color: var(--accent);
