@@ -95,7 +95,7 @@
     }
     .summary {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -378,6 +378,9 @@
       border: 1px solid var(--line);
       border-radius: 8px;
     }
+    .summary .empty {
+      grid-column: 1 / -1;
+    }
     @media (max-width: 840px) {
       .summary, .toolbar, .layout, .analysis-grid {
         grid-template-columns: 1fr;
@@ -476,8 +479,12 @@
     init();
 
     async function init() {
-      const data = await loadData();
-      state.data = data;
+      try {
+        state.data = await loadData();
+      } catch (error) {
+        renderLoadError(error);
+        return;
+      }
       document.getElementById('search').addEventListener('input', (event) => {
         state.query = event.target.value.trim().toLowerCase();
         render();
@@ -498,10 +505,26 @@
       for (const url of ['latest.json', '../data/latest.json', './data/latest.json']) {
         try {
           const response = await fetch(url, { cache: 'no-store' });
-          if (response.ok) return await response.json();
+          if (!response.ok) continue;
+          const data = await response.json();
+          if (Array.isArray(data.stocks) && Array.isArray(data.posts)) return data;
         } catch {}
       }
       throw new Error('找不到 latest.json');
+    }
+
+    function renderLoadError(error) {
+      document.getElementById('meta').textContent = '資料讀取失敗';
+      document.getElementById('summary').innerHTML = `
+        <div class="empty">無法載入 latest.json：${escapeHtml(error.message)}。請先執行更新流程，或確認 GitHub Pages 已經產生 latest.json。</div>
+      `;
+      document.getElementById('analysis-count').textContent = '';
+      document.getElementById('analysis-cards').innerHTML = '<div class="empty">尚未取得股票分析資料。</div>';
+      document.getElementById('stock-count').textContent = '0 檔';
+      document.getElementById('stocks').innerHTML = '<tr><td colspan="3"><div class="empty">尚未取得股票列表資料。</div></td></tr>';
+      document.getElementById('post-count').textContent = '0 篇';
+      document.getElementById('posts').innerHTML = '<div class="empty">尚未取得貼文資料。</div>';
+      document.getElementById('reset-filters').disabled = true;
     }
 
     function render() {
@@ -526,6 +549,8 @@
         ['含股票貼文', summary.postsWithStocks],
         ['股票數', summary.uniqueStocks],
         ['基本面覆蓋', summary.fundamentalsCoverage || 0],
+        ['進階指標', summary.qualityMetricsCoverage || 0],
+        ['現金流覆蓋', summary.cashflowCoverage || 0],
       ];
       document.getElementById('summary').innerHTML = metrics.map(([label, value]) => `
         <div class="metric">
@@ -621,12 +646,20 @@
             <div class="analysis-stat"><div class="label">殖利率</div><div class="value">${formatPercent(stock.fundamentals?.dividendYield)}</div></div>
             <div class="analysis-stat"><div class="label">季度 EPS</div><div class="value">${formatNumber(stock.fundamentals?.quarterlyEps)}</div></div>
             <div class="analysis-stat"><div class="label">估算近四季 EPS</div><div class="value">${formatNumber(stock.fundamentals?.estimatedTtmEps)}</div></div>
+            <div class="analysis-stat"><div class="label">營收 YoY</div><div class="value">${formatPercent(stock.fundamentals?.revenueYoY)}</div></div>
+            <div class="analysis-stat"><div class="label">累計營收 YoY</div><div class="value">${formatPercent(stock.fundamentals?.cumulativeRevenueYoY)}</div></div>
+            <div class="analysis-stat"><div class="label">毛利率</div><div class="value">${formatPercent(stock.fundamentals?.grossMargin)}</div></div>
+            <div class="analysis-stat"><div class="label">ROE</div><div class="value">${formatPercent(stock.fundamentals?.roe)}</div></div>
+            <div class="analysis-stat"><div class="label">負債比</div><div class="value">${formatPercent(stock.fundamentals?.debtRatio)}</div></div>
+            <div class="analysis-stat"><div class="label">FCF / 淨利</div><div class="value">${formatPercent(stock.fundamentals?.fcfToNetIncomeRatio)}</div></div>
             <div class="analysis-stat"><div class="label">財報期別</div><div class="value small">${formatFiscal(stock.fundamentals)}</div></div>
+            <div class="analysis-stat"><div class="label">現金流期別</div><div class="value small">${escapeHtml(stock.fundamentals?.cashflowPeriod || '-')}</div></div>
             <div class="analysis-stat"><div class="label">提及熱度</div><div class="value">${stock.mentionScore}</div></div>
             <div class="analysis-stat"><div class="label">貼文訊號</div><div class="value small">${escapeHtml(primaryAction(stock))}</div></div>
           </div>
           <div class="badges">${renderBadges(Object.keys(stock.actions || {}))}</div>
           <p>${escapeHtml(fundamentalNotes(stock))}</p>
+          <p class="muted">FCF 口徑：${escapeHtml(formatCashflowMethod(stock.fundamentals))}</p>
           <p class="muted">資料日期：${escapeHtml(formatDataDates(stock.fundamentals))}</p>
         </article>
       `).join('') : '<div class="empty">沒有符合條件的股票分析。</div>';
@@ -695,8 +728,16 @@
       return [
         fundamentals.priceDate ? `行情 ${fundamentals.priceDate}` : '',
         fundamentals.valuationDate ? `估值 ${fundamentals.valuationDate}` : '',
+        fundamentals.revenueMonth ? `營收 ${fundamentals.revenueMonth}` : '',
         fundamentals.financialDate ? `財報 ${fundamentals.financialDate}` : '',
+        fundamentals.balanceSheetDate ? `資產負債表 ${fundamentals.balanceSheetDate}` : '',
+        fundamentals.cashflowPeriod ? `現金流 ${fundamentals.cashflowPeriod}` : '',
       ].filter(Boolean).join('｜') || '無';
+    }
+
+    function formatCashflowMethod(fundamentals) {
+      if (!fundamentals?.cashflowMethod) return '現金流資料暫缺';
+      return fundamentals.cashflowMethod;
     }
 
     function formatFiscal(fundamentals) {
@@ -706,7 +747,9 @@
 
     function formatNumber(value) {
       if (value === null || value === undefined || value === '') return '-';
-      return Number(value).toLocaleString('zh-TW', { maximumFractionDigits: 2 });
+      const number = Number(value);
+      if (!Number.isFinite(number)) return '-';
+      return number.toLocaleString('zh-TW', { maximumFractionDigits: 2 });
     }
 
     function formatPercent(value) {

@@ -8,7 +8,8 @@
     "fetch": "node threads_reader.mjs @evachien.chien --post-pages 4 --out data/raw.json",
     "analyze": "node analyze_threads.mjs data/raw.json --out data/latest.json --refresh-universe --refresh-fundamentals",
     "update": "node update.mjs",
-    "check": "node --check threads_reader.mjs && node --check analyze_threads.mjs && node --check update.mjs"
+    "serve": "node serve.mjs",
+    "check": "node --check threads_reader.mjs && node --check analyze_threads.mjs && node --check update.mjs && node --check serve.mjs"
   },
   "engines": {
     "node": ">=22"

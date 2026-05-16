@@ -5,3 +5,5 @@ data/raw.json
 data/fundamentals.json
 data/stock_universe.json
 site/
+web.log
+web.err.log

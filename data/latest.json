@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-16T21:56:02.089Z",
+  "generatedAt": "2026-05-16T22:19:55.778Z",
   "source": {
     "target": "https://www.threads.com/@evachien.chien",
     "finalUrl": "https://www.threads.com/@evachien.chien",
     "title": "Olivia Chien（@evachien.chien） • Threads，暢所欲言",
-    "fetchedAt": "2026-05-16T21:55:52.545Z",
+    "fetchedAt": "2026-05-16T22:19:41.194Z",
     "postsFound": 4
   },
   "summary": {
@@ -118,7 +118,9 @@
       "regret": 3,
       "limitUp": 8
     },
-    "fundamentalsCoverage": 18
+    "fundamentalsCoverage": 18,
+    "qualityMetricsCoverage": 18,
+    "cashflowCoverage": 18
   },
   "dataSources": {
     "price": [
@@ -132,6 +134,21 @@
     "eps": [
       "https://openapi.twse.com.tw/v1/opendata/t187ap14_L",
       "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O"
+    ],
+    "revenue": [
+      "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
+      "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap05_O"
+    ],
+    "incomeStatement": [
+      "https://openapi.twse.com.tw/v1/opendata/t187ap06_L_{category}",
+      "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap06_O_{category}"
+    ],
+    "balanceSheet": [
+      "https://openapi.twse.com.tw/v1/opendata/t187ap07_L_{category}",
+      "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap07_O_{category}"
+    ],
+    "cashflow": [
+      "https://mopsfin.twse.com.tw/compare/data"
     ]
   },
   "stocks": [
@@ -191,7 +208,7 @@
       ],
       "fundamentals": {
         "code": "3665",
-        "name": "貿聯控股(BizLink Holding Inc.)",
+        "name": "貿聯-KY",
         "market": "TWSE",
         "price": 2095,
         "change": -155,
@@ -208,21 +225,49 @@
         "operatingProfit": 3108361,
         "netIncome": 2273476,
         "financialDate": "1150517",
+        "monthlyRevenue": 7382955,
+        "revenueYoY": 18.54291992756683,
+        "monthlyRevenueYoY": 18.54291992756683,
+        "cumulativeRevenueYoY": 25.374406359641693,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 6001841,
+        "grossMargin": 28.77,
+        "netIncomeParent": 2273834,
+        "totalAssets": 85600663,
+        "totalLiabilities": 38964135,
+        "totalEquity": 46636528,
+        "equityParent": 46639663,
+        "bookValuePerShare": 239.08,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 250919,
+        "investingCashflow": -1175371,
+        "freeCashFlowApprox": -924452,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 49.55,
         "annualizedQuarterlyEps": 46.64,
+        "roe": 19.5,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 45.52,
+        "fcfToNetIncomeRatio": -40.66,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 11.66",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 18.54291992756683%",
+            "FCF/淨利約 -40.66% ，自由現金流為負"
           ],
-          "score": 40
+          "score": 43
         }
       }
     },
@@ -269,7 +314,7 @@
       ],
       "fundamentals": {
         "code": "3008",
-        "name": "大立光電股份有限公司",
+        "name": "大立光",
         "market": "TWSE",
         "price": 3445,
         "change": 310,
@@ -286,19 +331,52 @@
         "operatingProfit": 5812218,
         "netIncome": 6175912,
         "financialDate": "1150517",
+        "monthlyRevenue": 5362271,
+        "revenueYoY": 24.47953724366276,
+        "monthlyRevenueYoY": 24.47953724366276,
+        "cumulativeRevenueYoY": 10.69183941702921,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 7679569,
+        "grossMargin": 49.41,
+        "netIncomeParent": 6123204,
+        "totalAssets": 226385533,
+        "totalLiabilities": 39762818,
+        "totalEquity": 186622715,
+        "equityParent": 184565071,
+        "bookValuePerShare": 1411.07,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 9316789,
+        "investingCashflow": -2411596,
+        "freeCashFlowApprox": 6905193,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 160.23,
         "annualizedQuarterlyEps": 186.52,
+        "roe": 13.27,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 17.56,
+        "fcfToNetIncomeRatio": 112.77,
         "analysis": {
           "flags": [
             "normal-pe",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "low-debt",
+            "cash-conversion"
           ],
           "notes": [
             "本益比位於常見合理區間，仍需和同產業比較",
             "最新季度 EPS 為 46.63",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 24.47953724366276% ，成長動能明顯",
+            "毛利率 49.41% ，產品或定價能力較佳",
+            "負債比 17.56% ，資產負債表壓力較低",
+            "FCF/淨利約 112.77% ，獲利現金轉換佳"
           ],
-          "score": 66
+          "score": 96
         }
       }
     },
@@ -336,7 +414,7 @@
       ],
       "fundamentals": {
         "code": "3037",
-        "name": "欣興電子股份有限公司",
+        "name": "欣興",
         "market": "TWSE",
         "price": 821,
         "change": -60,
@@ -353,21 +431,48 @@
         "operatingProfit": 2756634,
         "netIncome": 5380738,
         "financialDate": "1150517",
+        "monthlyRevenue": 13932815,
+        "revenueYoY": 27.63677460986582,
+        "monthlyRevenueYoY": 27.63677460986582,
+        "cumulativeRevenueYoY": 25.298423236676427,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 6726042,
+        "grossMargin": 17.96,
+        "netIncomeParent": 5042976,
+        "totalAssets": 266881071,
+        "totalLiabilities": 149928398,
+        "totalEquity": 116952673,
+        "equityParent": 113384008,
+        "bookValuePerShare": 71.39,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 5832670,
+        "investingCashflow": -4622671,
+        "freeCashFlowApprox": 1209999,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 6.8,
         "annualizedQuarterlyEps": 13.12,
+        "roe": 17.79,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 56.18,
+        "fcfToNetIncomeRatio": 23.99,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 3.28",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 27.63677460986582% ，成長動能明顯"
           ],
-          "score": 40
+          "score": 56
         }
       }
     },
@@ -415,7 +520,7 @@
       ],
       "fundamentals": {
         "code": "5439",
-        "name": "高技企業股份有限公司",
+        "name": "高技",
         "market": "TPEx",
         "price": 391,
         "change": -20,
@@ -433,21 +538,52 @@
         "operatingProfit": 367408,
         "netIncome": 326549,
         "financialDate": "1150516",
+        "monthlyRevenue": 950129,
+        "revenueYoY": 26.15619734523732,
+        "monthlyRevenueYoY": 26.15619734523732,
+        "cumulativeRevenueYoY": 60.1866191232015,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 515906,
+        "grossMargin": 20.33,
+        "netIncomeParent": 326549,
+        "totalAssets": 11144356,
+        "totalLiabilities": 6871584,
+        "totalEquity": 4272772,
+        "equityParent": 4272772,
+        "bookValuePerShare": 45.96,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": 759354,
+        "investingCashflow": -456772,
+        "freeCashFlowApprox": 302582,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 15.32,
         "annualizedQuarterlyEps": 14.04,
+        "roe": 30.57,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 61.66,
+        "fcfToNetIncomeRatio": 92.66,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-roe",
+            "cash-conversion"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 3.51",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 26.15619734523732% ，成長動能明顯",
+            "ROE 約 30.57% ，股東權益報酬率偏強",
+            "FCF/淨利約 92.66% ，獲利現金轉換佳"
           ],
-          "score": 46
+          "score": 72
         }
       }
     },
@@ -485,7 +621,7 @@
       ],
       "fundamentals": {
         "code": "3653",
-        "name": "健策精密工業股份有限公司",
+        "name": "健策",
         "market": "TWSE",
         "price": 3465,
         "change": 100,
@@ -502,21 +638,56 @@
         "operatingProfit": 1696566,
         "netIncome": 1404530,
         "financialDate": "1150517",
+        "monthlyRevenue": 2311149,
+        "revenueYoY": 26.91849568169949,
+        "monthlyRevenueYoY": 26.91849568169949,
+        "cumulativeRevenueYoY": 15.86868520446359,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 2216652,
+        "grossMargin": 41.78,
+        "netIncomeParent": 1398199,
+        "totalAssets": 30307238,
+        "totalLiabilities": 8909881,
+        "totalEquity": 21397357,
+        "equityParent": 21182085,
+        "bookValuePerShare": 144.36,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 1543192,
+        "investingCashflow": -381193,
+        "freeCashFlowApprox": 1161999,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 36.15,
         "annualizedQuarterlyEps": 38.12,
+        "roe": 26.4,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 29.4,
+        "fcfToNetIncomeRatio": 83.11,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "low-debt",
+            "cash-conversion"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 9.53",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 26.91849568169949% ，成長動能明顯",
+            "毛利率 41.78% ，產品或定價能力較佳",
+            "ROE 約 26.4% ，股東權益報酬率偏強",
+            "負債比 29.4% ，資產負債表壓力較低",
+            "FCF/淨利約 83.11% ，獲利現金轉換佳"
           ],
-          "score": 40
+          "score": 75
         }
       }
     },
@@ -559,7 +730,7 @@
       ],
       "fundamentals": {
         "code": "4749",
-        "name": "新應材股份有限公司",
+        "name": "新應材",
         "market": "TPEx",
         "price": 1015,
         "change": -105,
@@ -577,19 +748,52 @@
         "operatingProfit": 337159,
         "netIncome": 338795,
         "financialDate": "1150516",
+        "monthlyRevenue": 352635,
+        "revenueYoY": -12.392302417792088,
+        "monthlyRevenueYoY": -12.392302417792088,
+        "cumulativeRevenueYoY": 17.366018715964966,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 565671,
+        "grossMargin": 45.41,
+        "netIncomeParent": 339519,
+        "totalAssets": 10881429,
+        "totalLiabilities": 1930797,
+        "totalEquity": 8950632,
+        "equityParent": 8941600,
+        "bookValuePerShare": 96.42,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": 219421,
+        "investingCashflow": -288334,
+        "freeCashFlowApprox": -68913,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 12.68,
         "annualizedQuarterlyEps": 14.64,
+        "roe": 15.19,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 17.74,
+        "fcfToNetIncomeRatio": -20.3,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-decline",
+            "high-margin",
+            "low-debt",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 3.66",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年減 12.392302417792088% ，需確認衰退原因",
+            "毛利率 45.41% ，產品或定價能力較佳",
+            "負債比 17.74% ，資產負債表壓力較低",
+            "FCF/淨利約 -20.3% ，自由現金流為負"
           ],
           "score": 40
         }
@@ -634,7 +838,7 @@
       ],
       "fundamentals": {
         "code": "3081",
-        "name": "聯亞光電工業股份有限公司",
+        "name": "聯亞",
         "market": "TPEx",
         "price": 2655,
         "change": -290,
@@ -652,21 +856,54 @@
         "operatingProfit": 373230,
         "netIncome": 317515,
         "financialDate": "1150516",
+        "monthlyRevenue": 395349,
+        "revenueYoY": 115.38448966249898,
+        "monthlyRevenueYoY": 115.38448966249898,
+        "cumulativeRevenueYoY": 103.7026472556527,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 495233,
+        "grossMargin": 54.76,
+        "netIncomeParent": null,
+        "totalAssets": 5678137,
+        "totalLiabilities": 1438581,
+        "totalEquity": 4239556,
+        "equityParent": null,
+        "bookValuePerShare": 45.82,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": 282783,
+        "investingCashflow": -220778,
+        "freeCashFlowApprox": 62005,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 7.61,
         "annualizedQuarterlyEps": 13.76,
+        "roe": 29.96,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 25.34,
+        "fcfToNetIncomeRatio": 19.53,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "low-debt"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 3.44",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 115.38448966249898% ，成長動能明顯",
+            "毛利率 54.76% ，產品或定價能力較佳",
+            "ROE 約 29.96% ，股東權益報酬率偏強",
+            "負債比 25.34% ，資產負債表壓力較低"
           ],
-          "score": 40
+          "score": 70
         }
       }
     },
@@ -696,7 +933,7 @@
       ],
       "fundamentals": {
         "code": "6291",
-        "name": "沛亨半導體股份有限公司",
+        "name": "沛亨",
         "market": "TPEx",
         "price": 462.5,
         "change": -46.5,
@@ -714,21 +951,54 @@
         "operatingProfit": 148757,
         "netIncome": 127072,
         "financialDate": "1150516",
+        "monthlyRevenue": 239818,
+        "revenueYoY": 42.11268607186878,
+        "monthlyRevenueYoY": 42.11268607186878,
+        "cumulativeRevenueYoY": 47.4466296691359,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 247536,
+        "grossMargin": 37.5,
+        "netIncomeParent": 126146,
+        "totalAssets": 2286345,
+        "totalLiabilities": 907692,
+        "totalEquity": 1378653,
+        "equityParent": 1278584,
+        "bookValuePerShare": 30.44,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": 52374,
+        "investingCashflow": -6104,
+        "freeCashFlowApprox": 46270,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 8.56,
         "annualizedQuarterlyEps": 12,
+        "roe": 39.46,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 39.7,
+        "fcfToNetIncomeRatio": 36.68,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "low-debt"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 3",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 42.11268607186878% ，成長動能明顯",
+            "毛利率 37.5% ，產品或定價能力較佳",
+            "ROE 約 39.46% ，股東權益報酬率偏強",
+            "負債比 39.7% ，資產負債表壓力較低"
           ],
-          "score": 40
+          "score": 70
         }
       }
     },
@@ -756,7 +1026,7 @@
       ],
       "fundamentals": {
         "code": "2337",
-        "name": "旺宏電子股份有限公司",
+        "name": "旺宏",
         "market": "TWSE",
         "price": 162.5,
         "change": -6.5,
@@ -773,19 +1043,52 @@
         "operatingProfit": 1932572,
         "netIncome": 1779369,
         "financialDate": "1150517",
+        "monthlyRevenue": 5912524,
+        "revenueYoY": 153.71283899759698,
+        "monthlyRevenueYoY": 153.71283899759698,
+        "cumulativeRevenueYoY": 93.45563776655904,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 4271356,
+        "grossMargin": 40.8,
+        "netIncomeParent": 1775820,
+        "totalAssets": 82152781,
+        "totalLiabilities": 31504611,
+        "totalEquity": 50648170,
+        "equityParent": 50639505,
+        "bookValuePerShare": 25.58,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 2194827,
+        "investingCashflow": -218174,
+        "freeCashFlowApprox": 1976653,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": null,
         "annualizedQuarterlyEps": 3.6,
+        "roe": 14.03,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 38.35,
+        "fcfToNetIncomeRatio": 111.31,
         "analysis": {
           "flags": [
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "low-debt",
+            "cash-conversion"
           ],
           "notes": [
             "本益比資料不足或不適用",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
-            "最新季度 EPS 為 0.9"
+            "最新季度 EPS 為 0.9",
+            "月營收年增 153.71283899759698% ，成長動能明顯",
+            "毛利率 40.8% ，產品或定價能力較佳",
+            "負債比 38.35% ，資產負債表壓力較低",
+            "FCF/淨利約 111.31% ，獲利現金轉換佳"
           ],
-          "score": 50
+          "score": 80
         }
       }
     },
@@ -815,7 +1118,7 @@
       ],
       "fundamentals": {
         "code": "6223",
-        "name": "旺矽科技股份有限公司",
+        "name": "旺矽",
         "market": "TPEx",
         "price": 5895,
         "change": -395,
@@ -833,21 +1136,56 @@
         "operatingProfit": 1273010,
         "netIncome": 1227478,
         "financialDate": "1150516",
+        "monthlyRevenue": 1485961,
+        "revenueYoY": 52.59594490792657,
+        "monthlyRevenueYoY": 52.59594490792657,
+        "cumulativeRevenueYoY": 42.51276664792454,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 2338079,
+        "grossMargin": 59.45,
+        "netIncomeParent": 1227478,
+        "totalAssets": 25714239,
+        "totalLiabilities": 9958605,
+        "totalEquity": 15755634,
+        "equityParent": 15755634,
+        "bookValuePerShare": 160.8,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": 991607,
+        "investingCashflow": -1969232,
+        "freeCashFlowApprox": -977625,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 37.56,
         "annualizedQuarterlyEps": 50.12,
+        "roe": 31.16,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 38.73,
+        "fcfToNetIncomeRatio": -79.65,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "low-debt",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 12.53",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 52.59594490792657% ，成長動能明顯",
+            "毛利率 59.45% ，產品或定價能力較佳",
+            "ROE 約 31.16% ，股東權益報酬率偏強",
+            "負債比 38.73% ，資產負債表壓力較低",
+            "FCF/淨利約 -79.65% ，自由現金流為負"
           ],
-          "score": 40
+          "score": 61
         }
       }
     },
@@ -871,7 +1209,7 @@
       ],
       "fundamentals": {
         "code": "8046",
-        "name": "南亞電路板股份有限公司",
+        "name": "南電",
         "market": "TWSE",
         "price": 786,
         "change": -61,
@@ -888,21 +1226,50 @@
         "operatingProfit": 1352237,
         "netIncome": 1308626,
         "financialDate": "1150517",
+        "monthlyRevenue": 4450857,
+        "revenueYoY": 39.466538235928184,
+        "monthlyRevenueYoY": 39.466538235928184,
+        "cumulativeRevenueYoY": 34.153949533434236,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 1771445,
+        "grossMargin": 15.85,
+        "netIncomeParent": 1308626,
+        "totalAssets": 62161816,
+        "totalLiabilities": 15455246,
+        "totalEquity": 46706570,
+        "equityParent": 46706570,
+        "bookValuePerShare": 72.28,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 1980522,
+        "investingCashflow": -1107974,
+        "freeCashFlowApprox": 872548,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 4.72,
         "annualizedQuarterlyEps": 8.12,
+        "roe": 11.21,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 24.86,
+        "fcfToNetIncomeRatio": 66.68,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "low-debt"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 2.03",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 39.466538235928184% ，成長動能明顯",
+            "負債比 24.86% ，資產負債表壓力較低"
           ],
-          "score": 40
+          "score": 60
         }
       }
     },
@@ -936,7 +1303,7 @@
       ],
       "fundamentals": {
         "code": "6227",
-        "name": "茂綸股份有限公司",
+        "name": "茂綸",
         "market": "TPEx",
         "price": 124.5,
         "change": 11,
@@ -954,17 +1321,49 @@
         "operatingProfit": 296341,
         "netIncome": 231907,
         "financialDate": "1150516",
+        "monthlyRevenue": 2612295,
+        "revenueYoY": 18.336884095950772,
+        "monthlyRevenueYoY": 18.336884095950772,
+        "cumulativeRevenueYoY": 32.00866013314893,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 507491,
+        "grossMargin": 10.48,
+        "netIncomeParent": 228229,
+        "totalAssets": 10405817,
+        "totalLiabilities": 7471610,
+        "totalEquity": 2934207,
+        "equityParent": 2880279,
+        "bookValuePerShare": 37.84,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": -133482,
+        "investingCashflow": -1220,
+        "freeCashFlowApprox": -134702,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 8.72,
         "annualizedQuarterlyEps": 12,
+        "roe": 31.7,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 71.8,
+        "fcfToNetIncomeRatio": -59.02,
         "analysis": {
           "flags": [
             "normal-pe",
-            "positive-eps"
+            "positive-eps",
+            "high-roe",
+            "high-debt",
+            "negative-fcf"
           ],
           "notes": [
             "本益比位於常見合理區間，仍需和同產業比較",
             "最新季度 EPS 為 3",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 18.336884095950772%",
+            "ROE 約 31.7% ，股東權益報酬率偏強",
+            "負債比 71.8% 偏高，需看現金流與利息負擔",
+            "FCF/淨利約 -59.02% ，自由現金流為負"
           ],
           "score": 66
         }
@@ -994,7 +1393,7 @@
       ],
       "fundamentals": {
         "code": "3443",
-        "name": "創意電子股份有限公司",
+        "name": "創意",
         "market": "TWSE",
         "price": 4845,
         "change": -230,
@@ -1011,21 +1410,50 @@
         "operatingProfit": 1824178,
         "netIncome": 1646240,
         "financialDate": "1150517",
+        "monthlyRevenue": 4294033,
+        "revenueYoY": 156.85087929178133,
+        "monthlyRevenueYoY": 156.85087929178133,
+        "cumulativeRevenueYoY": 81.0355514911027,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 3113307,
+        "grossMargin": 27.2,
+        "netIncomeParent": 1646240,
+        "totalAssets": 35132291,
+        "totalLiabilities": 20548418,
+        "totalEquity": 14583873,
+        "equityParent": 14583873,
+        "bookValuePerShare": 108.83,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 1745645,
+        "investingCashflow": -723178,
+        "freeCashFlowApprox": 1022467,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 33.24,
         "annualizedQuarterlyEps": 49.12,
+        "roe": 45.15,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 58.49,
+        "fcfToNetIncomeRatio": 62.11,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-roe"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 12.28",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 156.85087929178133% ，成長動能明顯",
+            "ROE 約 45.15% ，股東權益報酬率偏強"
           ],
-          "score": 40
+          "score": 61
         }
       }
     },
@@ -1057,7 +1485,7 @@
       ],
       "fundamentals": {
         "code": "2345",
-        "name": "智邦科技股份有限公司",
+        "name": "智邦",
         "market": "TWSE",
         "price": 2505,
         "change": -170,
@@ -1074,21 +1502,52 @@
         "operatingProfit": 10048687,
         "netIncome": 8333109,
         "financialDate": "1150517",
+        "monthlyRevenue": 27360301,
+        "revenueYoY": 53.86862868005451,
+        "monthlyRevenueYoY": 53.86862868005451,
+        "cumulativeRevenueYoY": 61.040087798619574,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 13700875,
+        "grossMargin": 19.54,
+        "netIncomeParent": 8341044,
+        "totalAssets": 164483519,
+        "totalLiabilities": 99078985,
+        "totalEquity": 65404534,
+        "equityParent": 65317039,
+        "bookValuePerShare": 116.87,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": -3658466,
+        "investingCashflow": -2055863,
+        "freeCashFlowApprox": -5714329,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 52.88,
         "annualizedQuarterlyEps": 59.68,
+        "roe": 51.08,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 60.24,
+        "fcfToNetIncomeRatio": -68.51,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-roe",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 14.92",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 53.86862868005451% ，成長動能明顯",
+            "ROE 約 51.08% ，股東權益報酬率偏強",
+            "FCF/淨利約 -68.51% ，自由現金流為負"
           ],
-          "score": 40
+          "score": 52
         }
       }
     },
@@ -1118,7 +1577,7 @@
       ],
       "fundamentals": {
         "code": "2344",
-        "name": "華邦電子股份有限公司",
+        "name": "華邦電",
         "market": "TWSE",
         "price": 129.5,
         "change": -4.5,
@@ -1135,19 +1594,52 @@
         "operatingProfit": 12550494,
         "netIncome": 10117678,
         "financialDate": "1150517",
+        "monthlyRevenue": 19245022,
+        "revenueYoY": 182.2232686329836,
+        "monthlyRevenueYoY": 182.2232686329836,
+        "cumulativeRevenueYoY": 114.45152253341396,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 20415002,
+        "grossMargin": 53.37,
+        "netIncomeParent": 10114310,
+        "totalAssets": 229813688,
+        "totalLiabilities": 106920169,
+        "totalEquity": 122893519,
+        "equityParent": 116650942,
+        "bookValuePerShare": 25.92,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 12365781,
+        "investingCashflow": -25657377,
+        "freeCashFlowApprox": -13291596,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 3.37,
         "annualizedQuarterlyEps": 9,
+        "roe": 34.68,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 46.52,
+        "fcfToNetIncomeRatio": -131.41,
         "analysis": {
           "flags": [
             "high-pe",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "最新季度 EPS 為 2.25",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 182.2232686329836% ，成長動能明顯",
+            "毛利率 53.37% ，產品或定價能力較佳",
+            "ROE 約 34.68% ，股東權益報酬率偏強",
+            "FCF/淨利約 -131.41% ，自由現金流為負"
           ],
-          "score": 54
+          "score": 71
         }
       }
     },
@@ -1177,7 +1669,7 @@
       ],
       "fundamentals": {
         "code": "8299",
-        "name": "群聯電子股份有限公司",
+        "name": "群聯",
         "market": "TPEx",
         "price": 2650,
         "change": -230,
@@ -1195,21 +1687,54 @@
         "operatingProfit": 14840530,
         "netIncome": 15174981,
         "financialDate": "1150516",
+        "monthlyRevenue": 20207493,
+        "revenueYoY": 236.6326033058058,
+        "monthlyRevenueYoY": 236.6326033058058,
+        "cumulativeRevenueYoY": 208.3172163574361,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 25117543,
+        "grossMargin": 61.31,
+        "netIncomeParent": 15174020,
+        "totalAssets": 141066298,
+        "totalLiabilities": 66936221,
+        "totalEquity": 74130077,
+        "equityParent": 74118255,
+        "bookValuePerShare": 335.25,
+        "balanceSheetDate": "1150516",
+        "operatingCashflow": -13848665,
+        "investingCashflow": -888835,
+        "freeCashFlowApprox": -14737500,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 104.54,
         "annualizedQuarterlyEps": 275.2,
+        "roe": 81.89,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 47.45,
+        "fcfToNetIncomeRatio": -97.12,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 68.8",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 236.6326033058058% ，成長動能明顯",
+            "毛利率 61.31% ，產品或定價能力較佳",
+            "ROE 約 81.89% ，股東權益報酬率偏強",
+            "FCF/淨利約 -97.12% ，自由現金流為負"
           ],
-          "score": 46
+          "score": 63
         }
       }
     },
@@ -1237,7 +1762,7 @@
       ],
       "fundamentals": {
         "code": "3533",
-        "name": "嘉澤端子工業股份有限公司",
+        "name": "嘉澤",
         "market": "TWSE",
         "price": 2330,
         "change": -120,
@@ -1254,21 +1779,53 @@
         "operatingProfit": 2708466,
         "netIncome": 2431334,
         "financialDate": "1150517",
+        "monthlyRevenue": 3391879,
+        "revenueYoY": 15.212263750388074,
+        "monthlyRevenueYoY": 15.212263750388074,
+        "cumulativeRevenueYoY": 19.383664067397778,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 4621584,
+        "grossMargin": 49.55,
+        "netIncomeParent": 2396522,
+        "totalAssets": 54367736,
+        "totalLiabilities": 10356158,
+        "totalEquity": 44011578,
+        "equityParent": 41929264,
+        "bookValuePerShare": 373.63,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 2125315,
+        "investingCashflow": -1585503,
+        "freeCashFlowApprox": 539812,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 71.17,
         "annualizedQuarterlyEps": 85.48,
+        "roe": 22.86,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 19.05,
+        "fcfToNetIncomeRatio": 22.52,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "high-margin",
+            "high-roe",
+            "low-debt"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 21.37",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 15.212263750388074%",
+            "毛利率 49.55% ，產品或定價能力較佳",
+            "ROE 約 22.86% ，股東權益報酬率偏強",
+            "負債比 19.05% ，資產負債表壓力較低"
           ],
-          "score": 46
+          "score": 72
         }
       }
     },
@@ -1292,7 +1849,7 @@
       ],
       "fundamentals": {
         "code": "7769",
-        "name": "鴻勁精密股份有限公司",
+        "name": "鴻勁",
         "market": "TWSE",
         "price": 6895,
         "change": -665,
@@ -1309,21 +1866,56 @@
         "operatingProfit": 5360051,
         "netIncome": 4624266,
         "financialDate": "1150517",
+        "monthlyRevenue": 4362649,
+        "revenueYoY": 111.83182996542342,
+        "monthlyRevenueYoY": 111.83182996542342,
+        "cumulativeRevenueYoY": 89.0289902118116,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150516",
+        "grossProfit": 6031710,
+        "grossMargin": 56.24,
+        "netIncomeParent": 4624266,
+        "totalAssets": 80586222,
+        "totalLiabilities": 17867884,
+        "totalEquity": 62718338,
+        "equityParent": 62718338,
+        "bookValuePerShare": 348.62,
+        "balanceSheetDate": "1150517",
+        "operatingCashflow": 2697341,
+        "investingCashflow": -8000668,
+        "freeCashFlowApprox": -5303327,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
         "estimatedTtmEps": 80.14,
         "annualizedQuarterlyEps": 102.8,
+        "roe": 29.49,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 22.17,
+        "fcfToNetIncomeRatio": -114.68,
         "analysis": {
           "flags": [
             "high-pe",
             "high-pb",
-            "positive-eps"
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "high-roe",
+            "low-debt",
+            "negative-fcf"
           ],
           "notes": [
             "本益比偏高，市場可能反映較高成長期待",
             "股價淨值比較高，通常需要較強 ROE 或成長支撐",
             "最新季度 EPS 為 25.7",
-            "有現金殖利率，但不是高息型訊號"
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 111.83182996542342% ，成長動能明顯",
+            "毛利率 56.24% ，產品或定價能力較佳",
+            "ROE 約 29.49% ，股東權益報酬率偏強",
+            "負債比 22.17% ，資產負債表壓力較低",
+            "FCF/淨利約 -114.68% ，自由現金流為負"
           ],
-          "score": 40
+          "score": 61
         }
       }
     }
@@ -1333,7 +1925,7 @@
       "index": 0,
       "url": "https://www.threads.com/@evachien.chien/post/DYahFWMk5lm",
       "topic": "股票日常",
-      "time": "38分鐘",
+      "time": "1小時",
       "text": "我之前文章有提到目前散熱和ABF跌，會不會真的就不需要CoWoS？ 但事實上，CoWoS目前仍是AI晶片主流封裝技術，且技術成熟、良率穩定，短期內難以被完全取代。而CoWoP目前仍處於開發中的狀態，這篇文章，有提到玻璃基板的文章，寫的很詳細，引用給股友們了解！此外版主Benjamin 平常也常常會分析股市AI的議題，言之有物，大家可以追蹤一下，以利知識增長👍",
       "mentions": []
     },

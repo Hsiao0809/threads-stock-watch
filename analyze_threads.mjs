@@ -7,13 +7,17 @@ const outputPath = resolve(args.out || args.output || 'data/latest.json');
 const aliasesPath = resolve(args.aliases || 'data/stock_aliases.json');
 const universePath = resolve(args.universe || 'data/stock_universe.json');
 const fundamentalsPath = resolve(args.fundamentals || 'data/fundamentals.json');
+const FINANCIAL_CATEGORIES = ['basi', 'bd', 'ci', 'fh', 'ins', 'mim'];
 
 const raw = JSON.parse(readFileSync(inputPath, 'utf8'));
 const aliases = existsSync(aliasesPath) ? JSON.parse(readFileSync(aliasesPath, 'utf8')) : [];
 const universe = await loadUniverse({ aliases, universePath, refresh: Boolean(args.refreshUniverse) });
+const preliminary = analyze(raw, universe, {});
+const targetCodes = [...new Set(preliminary.stocks.map((stock) => stock.code).filter(Boolean))];
 const fundamentals = await loadFundamentals({
   fundamentalsPath,
   refresh: Boolean(args.refreshFundamentals || args.refreshUniverse),
+  targetCodes,
 });
 const analysis = analyze(raw, universe, fundamentals);
 
@@ -22,13 +26,13 @@ writeFileSync(outputPath, `${JSON.stringify(analysis, null, 2)}\n`, 'utf8');
 console.log(`Wrote ${outputPath}`);
 console.log(`Stocks: ${analysis.summary.uniqueStocks}, posts: ${analysis.summary.totalPosts}`);
 
-async function loadFundamentals({ fundamentalsPath: targetPath, refresh }) {
+async function loadFundamentals({ fundamentalsPath: targetPath, refresh, targetCodes = [] }) {
   if (!refresh && existsSync(targetPath)) {
     return JSON.parse(readFileSync(targetPath, 'utf8'));
   }
 
   try {
-    const fundamentals = await fetchOfficialFundamentals();
+    const fundamentals = await fetchOfficialFundamentals(targetCodes);
     mkdirSync(dirname(targetPath), { recursive: true });
     writeFileSync(targetPath, `${JSON.stringify(fundamentals, null, 2)}\n`, 'utf8');
     return fundamentals;
@@ -39,21 +43,33 @@ async function loadFundamentals({ fundamentalsPath: targetPath, refresh }) {
   }
 }
 
-async function fetchOfficialFundamentals() {
+async function fetchOfficialFundamentals(targetCodes = []) {
   const [
     twsePrices,
     twseValuations,
     twseEps,
+    twseRevenues,
+    twseIncomeRows,
+    twseBalanceRows,
     tpexPrices,
     tpexValuations,
     tpexEps,
+    tpexRevenues,
+    tpexIncomeRows,
+    tpexBalanceRows,
   ] = await Promise.all([
     fetchJson('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL'),
     fetchJson('https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL'),
     fetchJson('https://openapi.twse.com.tw/v1/opendata/t187ap14_L'),
+    fetchJson('https://openapi.twse.com.tw/v1/opendata/t187ap05_L'),
+    fetchRows(FINANCIAL_CATEGORIES.map((category) => `https://openapi.twse.com.tw/v1/opendata/t187ap06_L_${category}`)),
+    fetchRows(FINANCIAL_CATEGORIES.map((category) => `https://openapi.twse.com.tw/v1/opendata/t187ap07_L_${category}`)),
     fetchJson('https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes'),
     fetchJson('https://www.tpex.org.tw/openapi/v1/tpex_mainboard_peratio_analysis'),
     fetchJson('https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O'),
+    fetchJson('https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap05_O'),
+    fetchRows(FINANCIAL_CATEGORIES.map((category) => `https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap06_O_${category}`)),
+    fetchRows(FINANCIAL_CATEGORIES.map((category) => `https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap07_O_${category}`)),
   ]);
 
   const byCode = {};
@@ -100,6 +116,11 @@ async function fetchOfficialFundamentals() {
       financialDate: clean(row['出表日期']),
     });
   }
+  for (const row of twseRevenues) {
+    mergeRevenue(byCode, row, 'TWSE');
+  }
+  mergeIncomeStatements(byCode, twseIncomeRows, 'TWSE');
+  mergeBalanceSheets(byCode, twseBalanceRows, 'TWSE');
 
   for (const row of tpexPrices) {
     const code = clean(row.SecuritiesCompanyCode);
@@ -144,10 +165,33 @@ async function fetchOfficialFundamentals() {
       financialDate: clean(row.Date),
     });
   }
+  for (const row of tpexRevenues) {
+    mergeRevenue(byCode, row, 'TPEx');
+  }
+  mergeIncomeStatements(byCode, tpexIncomeRows, 'TPEx');
+  mergeBalanceSheets(byCode, tpexBalanceRows, 'TPEx');
+
+  const cashflowByCode = await fetchCashflowMetrics(targetCodes);
+  for (const [code, cashflow] of Object.entries(cashflowByCode)) {
+    mergeFundamental(byCode, code, cashflow);
+  }
 
   for (const item of Object.values(byCode)) {
     item.estimatedTtmEps = item.price && item.peRatio ? round(item.price / item.peRatio, 2) : null;
     item.annualizedQuarterlyEps = item.quarterlyEps !== null && item.quarterlyEps !== undefined ? round(item.quarterlyEps * 4, 2) : null;
+    const equityBase = firstPresentNumber(item.equityParent, item.totalEquity);
+    const netIncomeBase = firstPresentNumber(item.netIncomeParent, item.netIncome);
+    const annualizationFactor = fiscalQuarterAnnualization(item.fiscalQuarter);
+    item.roe = isFiniteNumber(netIncomeBase) && isFiniteNumber(equityBase) && equityBase !== 0
+      ? round((netIncomeBase / equityBase) * annualizationFactor * 100, 2)
+      : null;
+    item.roeBasis = item.roe === null ? null : `年化，依第 ${item.fiscalQuarter || '?'} 季累計獲利估算`;
+    item.debtRatio = isFiniteNumber(item.totalLiabilities) && isFiniteNumber(item.totalAssets) && item.totalAssets !== 0
+      ? round((item.totalLiabilities / item.totalAssets) * 100, 2)
+      : null;
+    item.fcfToNetIncomeRatio = isFiniteNumber(item.freeCashFlowApprox) && isFiniteNumber(netIncomeBase) && netIncomeBase !== 0
+      ? round((item.freeCashFlowApprox / netIncomeBase) * 100, 2)
+      : null;
     item.analysis = fundamentalAnalysis(item);
   }
 
@@ -160,8 +204,169 @@ async function fetchJson(url) {
   return await response.json();
 }
 
+async function fetchRows(urls) {
+  const rows = [];
+  for (const url of urls) {
+    try {
+      rows.push(...await fetchJson(url));
+    } catch (error) {
+      console.warn(`Official row fetch failed: ${url}: ${error.message}`);
+    }
+  }
+  return rows;
+}
+
 function mergeFundamental(byCode, code, patch) {
   byCode[code] = { ...(byCode[code] || {}), ...patch };
+}
+
+function mergeRevenue(byCode, row, market) {
+  const code = companyCode(row);
+  if (!code) return;
+  const monthlyRevenueYoY = numberOrNull(row['營業收入-去年同月增減(%)']);
+  mergeFundamental(byCode, code, {
+    code,
+    name: companyName(row),
+    market,
+    monthlyRevenue: numberOrNull(row['營業收入-當月營收']),
+    revenueYoY: monthlyRevenueYoY,
+    monthlyRevenueYoY,
+    cumulativeRevenueYoY: numberOrNull(row['累計營業收入-前期比較增減(%)']),
+    revenueMonth: clean(row['資料年月']),
+    revenueReportDate: clean(row['出表日期']),
+  });
+}
+
+function mergeIncomeStatements(byCode, rows, market) {
+  for (const row of rows) {
+    const code = companyCode(row);
+    if (!code) continue;
+    const revenue = numberOrNull(row['營業收入']);
+    const grossProfit = firstNumber(row, ['營業毛利（毛損）淨額', '營業毛利（毛損）']);
+    const grossMargin = isFiniteNumber(revenue) && revenue !== 0 && isFiniteNumber(grossProfit)
+      ? round((grossProfit / revenue) * 100, 2)
+      : null;
+    const netIncome = firstNumber(row, ['本期淨利（淨損）', '稅後淨利']);
+    const netIncomeParent = firstNumber(row, ['淨利（淨損）歸屬於母公司業主', '稅後淨利']);
+    mergeFundamental(byCode, code, {
+      code,
+      name: companyName(row),
+      market,
+      fiscalYear: clean(row['年度'] || row.Year),
+      fiscalQuarter: clean(row['季別'] || row.Season),
+      quarterlyEps: firstPresentNumber(firstNumber(row, ['基本每股盈餘（元）', '基本每股盈餘(元)', '基本每股盈餘']), byCode[code]?.quarterlyEps),
+      revenue,
+      grossProfit,
+      grossMargin,
+      operatingProfit: firstNumber(row, ['營業利益（損失）', '營業利益']),
+      netIncome,
+      netIncomeParent,
+      financialDate: clean(row['出表日期'] || row.Date),
+    });
+  }
+}
+
+function mergeBalanceSheets(byCode, rows, market) {
+  for (const row of rows) {
+    const code = companyCode(row);
+    if (!code) continue;
+    const totalAssets = firstNumber(row, ['資產總額', '資產總計']);
+    const totalLiabilities = firstNumber(row, ['負債總額', '負債總計']);
+    const totalEquity = firstNumber(row, ['權益總額', '權益總計']);
+    mergeFundamental(byCode, code, {
+      code,
+      name: companyName(row),
+      market,
+      fiscalYear: clean(row['年度'] || row.Year || byCode[code]?.fiscalYear),
+      fiscalQuarter: clean(row['季別'] || row.Season || byCode[code]?.fiscalQuarter),
+      totalAssets,
+      totalLiabilities,
+      totalEquity,
+      equityParent: firstNumber(row, ['歸屬於母公司業主之權益合計']),
+      bookValuePerShare: firstNumber(row, ['每股參考淨值']),
+      balanceSheetDate: clean(row['出表日期'] || row.Date),
+    });
+  }
+}
+
+async function fetchCashflowMetrics(targetCodes) {
+  const byCode = {};
+  const codes = [...new Set((targetCodes || []).map(clean).filter(Boolean))];
+  for (const code of codes) {
+    try {
+      const [operating, investing] = await Promise.all([
+        fetchMopsfinSeries(code, 'OperatingCashflow'),
+        fetchMopsfinSeries(code, 'InvestingCashflow'),
+      ]);
+      const common = latestCommonCashflow(operating, investing);
+      if (!common) continue;
+      byCode[code] = {
+        operatingCashflow: common.operating,
+        investingCashflow: common.investing,
+        freeCashFlowApprox: round(common.operating + common.investing, 2),
+        cashflowPeriod: common.period,
+        cashflowMethod: '營業活動現金流 + 投資活動現金流，作為 FCF 近似值',
+        cashflowDataSource: 'https://mopsfin.twse.com.tw/compare/data',
+      };
+    } catch (error) {
+      console.warn(`Cashflow fetch failed for ${code}: ${error.message}`);
+    }
+  }
+  return byCode;
+}
+
+async function fetchMopsfinSeries(code, compareItem) {
+  const body = new URLSearchParams({
+    compareItem,
+    quarter: '0',
+    ylabel: '仟元',
+    ys: '0',
+    revenue: '',
+    bcodeAvg: '',
+    companyAvg: 'false',
+    qnumber: '',
+  });
+  body.append('companyId', code);
+  body.append('displayCompanyId', code);
+  const response = await fetch('https://mopsfin.twse.com.tw/compare/data', {
+    method: 'POST',
+    headers: {
+      'user-agent': 'Mozilla/5.0',
+      accept: 'application/json, text/javascript, */*; q=0.01',
+      'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      referer: 'https://mopsfin.twse.com.tw/index',
+      'x-requested-with': 'XMLHttpRequest',
+    },
+    body,
+  });
+  if (!response.ok) throw new Error(`${compareItem}: ${response.status} ${response.statusText}`);
+  const payload = await response.json();
+  const parsed = payload.json ? JSON.parse(payload.json) : {};
+  const xaxisList = payload.xaxisList || parsed.xaxisList || [];
+  const graphData = payload.graphData || parsed.graphData || [];
+  const points = graphData[0]?.data || [];
+  return points
+    .map(([index, value, quality]) => ({
+      period: xaxisList[index] || String(index),
+      value: numberOrNull(value),
+      quality,
+    }))
+    .filter((point) => point.period && isFiniteNumber(point.value));
+}
+
+function latestCommonCashflow(operating, investing) {
+  const investingByPeriod = new Map(investing.map((point) => [point.period, point]));
+  for (let index = operating.length - 1; index >= 0; index -= 1) {
+    const operatingPoint = operating[index];
+    const investingPoint = investingByPeriod.get(operatingPoint.period);
+    if (!investingPoint) continue;
+    return {
+      period: operatingPoint.period,
+      operating: operatingPoint.value,
+      investing: investingPoint.value,
+    };
+  }
+  return null;
 }
 
 async function loadUniverse({ aliases, universePath: targetPath, refresh }) {
@@ -300,6 +505,8 @@ function analyze(rawInput, universe, fundamentals = {}) {
       })),
       actionTotals: summarizeActions(stocks),
       fundamentalsCoverage: stocks.filter((stock) => stock.fundamentals).length,
+      qualityMetricsCoverage: stocks.filter((stock) => stock.fundamentals?.revenueYoY !== null && stock.fundamentals?.grossMargin !== null && stock.fundamentals?.roe !== null && stock.fundamentals?.debtRatio !== null).length,
+      cashflowCoverage: stocks.filter((stock) => stock.fundamentals?.fcfToNetIncomeRatio !== null && stock.fundamentals?.fcfToNetIncomeRatio !== undefined).length,
     },
     dataSources: {
       price: [
@@ -313,6 +520,21 @@ function analyze(rawInput, universe, fundamentals = {}) {
       eps: [
         'https://openapi.twse.com.tw/v1/opendata/t187ap14_L',
         'https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O',
+      ],
+      revenue: [
+        'https://openapi.twse.com.tw/v1/opendata/t187ap05_L',
+        'https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap05_O',
+      ],
+      incomeStatement: [
+        'https://openapi.twse.com.tw/v1/opendata/t187ap06_L_{category}',
+        'https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap06_O_{category}',
+      ],
+      balanceSheet: [
+        'https://openapi.twse.com.tw/v1/opendata/t187ap07_L_{category}',
+        'https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap07_O_{category}',
+      ],
+      cashflow: [
+        'https://mopsfin.twse.com.tw/compare/data',
       ],
     },
     stocks,
@@ -550,6 +772,60 @@ function fundamentalAnalysis(item) {
     }
   }
 
+  if (item.revenueYoY !== null && item.revenueYoY !== undefined) {
+    if (item.revenueYoY >= 20) {
+      notes.push(`月營收年增 ${item.revenueYoY}% ，成長動能明顯`);
+      flags.push('revenue-growth');
+    } else if (item.revenueYoY > 0) {
+      notes.push(`月營收年增 ${item.revenueYoY}%`);
+    } else {
+      notes.push(`月營收年減 ${Math.abs(item.revenueYoY)}% ，需確認衰退原因`);
+      flags.push('revenue-decline');
+    }
+  }
+
+  if (item.grossMargin !== null && item.grossMargin !== undefined) {
+    if (item.grossMargin >= 30) {
+      notes.push(`毛利率 ${item.grossMargin}% ，產品或定價能力較佳`);
+      flags.push('high-margin');
+    } else if (item.grossMargin < 10) {
+      notes.push(`毛利率 ${item.grossMargin}% ，獲利緩衝較薄`);
+      flags.push('thin-margin');
+    }
+  }
+
+  if (item.roe !== null && item.roe !== undefined) {
+    if (item.roe >= 20) {
+      notes.push(`ROE 約 ${item.roe}% ，股東權益報酬率偏強`);
+      flags.push('high-roe');
+    } else if (item.roe < 5) {
+      notes.push(`ROE 約 ${item.roe}% ，資本效率偏弱`);
+      flags.push('low-roe');
+    }
+  }
+
+  if (item.debtRatio !== null && item.debtRatio !== undefined) {
+    if (item.debtRatio > 70) {
+      notes.push(`負債比 ${item.debtRatio}% 偏高，需看現金流與利息負擔`);
+      flags.push('high-debt');
+    } else if (item.debtRatio < 40) {
+      notes.push(`負債比 ${item.debtRatio}% ，資產負債表壓力較低`);
+      flags.push('low-debt');
+    }
+  }
+
+  if (item.fcfToNetIncomeRatio !== null && item.fcfToNetIncomeRatio !== undefined) {
+    if (item.fcfToNetIncomeRatio >= 80) {
+      notes.push(`FCF/淨利約 ${item.fcfToNetIncomeRatio}% ，獲利現金轉換佳`);
+      flags.push('cash-conversion');
+    } else if (item.fcfToNetIncomeRatio < 0) {
+      notes.push(`FCF/淨利約 ${item.fcfToNetIncomeRatio}% ，自由現金流為負`);
+      flags.push('negative-fcf');
+    }
+  } else {
+    notes.push('FCF/淨利需現金流資料，若 MOPSFIN 無資料則暫缺');
+  }
+
   return {
     flags,
     notes,
@@ -573,11 +849,36 @@ function fundamentalScore(item) {
     score += item.quarterlyEps > 0 ? 8 : -12;
   }
   if (item.dividendYield && item.dividendYield >= 4) score += 4;
+  if (item.revenueYoY !== null && item.revenueYoY !== undefined) {
+    if (item.revenueYoY >= 20) score += 8;
+    else if (item.revenueYoY > 0) score += 4;
+    else score -= 8;
+  }
+  if (item.grossMargin !== null && item.grossMargin !== undefined) {
+    if (item.grossMargin >= 30) score += 5;
+    else if (item.grossMargin < 10) score -= 5;
+  }
+  if (item.roe !== null && item.roe !== undefined) {
+    if (item.roe >= 20) score += 10;
+    else if (item.roe >= 10) score += 5;
+    else if (item.roe < 0) score -= 10;
+    else if (item.roe < 5) score -= 4;
+  }
+  if (item.debtRatio !== null && item.debtRatio !== undefined) {
+    if (item.debtRatio > 70) score -= 8;
+    else if (item.debtRatio < 40) score += 4;
+  }
+  if (item.fcfToNetIncomeRatio !== null && item.fcfToNetIncomeRatio !== undefined) {
+    if (item.fcfToNetIncomeRatio >= 80) score += 8;
+    else if (item.fcfToNetIncomeRatio >= 0) score += 3;
+    else score -= 6;
+  }
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
 function clean(value) {
-  return String(value || '').replace(/\s+/g, ' ').trim();
+  if (value === null || value === undefined) return '';
+  return String(value).replace(/\s+/g, ' ').trim();
 }
 
 function numberOrNull(value) {
@@ -585,6 +886,39 @@ function numberOrNull(value) {
   if (!normalized || normalized === '-' || normalized === 'N/A') return null;
   const number = Number(normalized);
   return Number.isFinite(number) ? number : null;
+}
+
+function firstNumber(row, keys) {
+  for (const key of keys) {
+    const value = numberOrNull(row[key]);
+    if (value !== null) return value;
+  }
+  return null;
+}
+
+function firstPresentNumber(...values) {
+  for (const value of values) {
+    if (isFiniteNumber(value)) return value;
+  }
+  return null;
+}
+
+function isFiniteNumber(value) {
+  return typeof value === 'number' && Number.isFinite(value);
+}
+
+function fiscalQuarterAnnualization(quarter) {
+  const value = Number(quarter);
+  if (!Number.isFinite(value) || value <= 0 || value > 4) return 4;
+  return 4 / value;
+}
+
+function companyCode(row) {
+  return clean(row['公司代號'] || row.SecuritiesCompanyCode || row.Code);
+}
+
+function companyName(row) {
+  return clean(row['公司名稱'] || row.CompanyName || row.Name);
 }
 
 function round(value, digits = 2) {
