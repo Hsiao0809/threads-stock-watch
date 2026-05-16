@@ -7,6 +7,7 @@ GitHub-native project for reading a public Threads profile, extracting Taiwan st
 - Uses local Chrome/Edge headless through Chrome DevTools Protocol to read public Threads posts.
 - Extracts Taiwan stock mentions from post text using TWSE and TPEx official OpenAPI data.
 - Adds simple action tags such as buy/add, sell, limit-up, limit-down, watch, and regret.
+- Adds fundamental indicators for mentioned stocks: close price, P/E, P/B, dividend yield, quarterly EPS, and estimated trailing EPS.
 - Produces `data/latest.json` for downstream analysis.
 - Publishes `public/index.html` as a GitHub Pages dashboard through GitHub Actions.
 
@@ -57,6 +58,10 @@ Increase `POST_PAGES` to inspect more post permalinks. Higher values take longer
 
 - TWSE OpenAPI: `https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL`
 - TPEx OpenAPI: `https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes`
+- TWSE valuation: `https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL`
+- TWSE quarterly EPS: `https://openapi.twse.com.tw/v1/opendata/t187ap14_L`
+- TPEx valuation: `https://www.tpex.org.tw/openapi/v1/tpex_mainboard_peratio_analysis`
+- TPEx quarterly EPS: `https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O`
 
 Fallback aliases live in `data/stock_aliases.json`.
 

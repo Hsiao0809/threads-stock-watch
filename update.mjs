@@ -27,6 +27,7 @@ await run(process.execPath, [
   '--out',
   'data/latest.json',
   '--refresh-universe',
+  '--refresh-fundamentals',
 ]);
 
 function run(command, args) {

@@ -51,6 +51,34 @@
       gap: 16px;
       min-height: 64px;
     }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+      border-color: rgba(94, 234, 212, 0.45);
+      background: rgba(94, 234, 212, 0.1);
+    }
     h1 {
       margin: 0;
       font-size: 20px;
@@ -139,6 +167,75 @@
       grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
       gap: 16px;
       align-items: start;
+    }
+    .analysis-panel {
+      margin-bottom: 16px;
+    }
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .analysis-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      min-width: 0;
+    }
+    .analysis-card h2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .analysis-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .analysis-stat {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: rgba(22, 32, 51, 0.72);
+    }
+    .analysis-stat .label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .analysis-stat .value {
+      font-size: 18px;
+      font-weight: 750;
+    }
+    .analysis-stat .value.small {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .score-bar {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--panel-3);
+      margin: 8px 0 10px;
+    }
+    .score-bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .analysis-card p {
+      margin: 10px 0 0;
+      color: #d6dee8;
+      line-height: 1.55;
+      font-size: 13px;
     }
     section {
       min-width: 0;
@@ -235,6 +332,9 @@
     .badge.sell, .badge.limitDown, .badge.bad { background: rgba(248, 113, 113, 0.16); color: var(--bad); }
     .badge.watch { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; }
     .badge.regret { background: rgba(251, 191, 36, 0.16); color: var(--warn); }
+    .badge.positive { background: rgba(16, 185, 129, 0.16); color: var(--good); }
+    .badge.negative { background: rgba(248, 113, 113, 0.16); color: var(--bad); }
+    .badge.mixed { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; }
     .posts {
       display: grid;
       gap: 10px;
@@ -268,6 +368,9 @@
       text-decoration: none;
     }
     a:hover { text-decoration: underline; }
+    .muted {
+      color: var(--muted);
+    }
     .empty {
       padding: 24px;
       color: var(--muted);
@@ -276,13 +379,18 @@
       border-radius: 8px;
     }
     @media (max-width: 840px) {
-      .summary, .toolbar, .layout {
+      .summary, .toolbar, .layout, .analysis-grid {
         grid-template-columns: 1fr;
       }
       .topbar {
         align-items: flex-start;
         flex-direction: column;
         padding: 14px 0;
+      }
+      .brand {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
       }
       .meta {
         text-align: left;
@@ -293,14 +401,20 @@
 <body>
   <header>
     <div class="wrap topbar">
-      <h1>Threads 台股提及分析</h1>
+      <div class="brand">
+        <h1>Threads 台股提及分析</h1>
+        <nav class="nav" aria-label="頁面">
+          <a href="#post-filter" aria-current="page">貼文篩選</a>
+          <a href="#stock-analysis">股票分析</a>
+        </nav>
+      </div>
       <div class="meta" id="meta">載入中</div>
     </div>
   </header>
 
   <main class="wrap">
     <div class="summary" id="summary"></div>
-    <div class="toolbar">
+    <div id="post-filter" class="toolbar">
       <input id="search" type="search" placeholder="搜尋股票、代號、貼文文字">
       <select id="action">
         <option value="">全部行為</option>
@@ -318,6 +432,11 @@
       </select>
       <button id="reset-filters" class="reset-filters" type="button">清除篩選</button>
     </div>
+
+    <section id="stock-analysis" class="analysis-panel">
+      <div class="section-title"><span>基本面指標分析</span><span id="analysis-count"></span></div>
+      <div class="analysis-grid" id="analysis-cards"></div>
+    </section>
 
     <div class="layout">
       <section>
@@ -389,6 +508,7 @@
       renderMeta();
       renderSummary();
       const stocks = filteredStocks();
+      renderStockAnalysis(stocks);
       renderStocks(stocks);
       renderPosts(stocks);
       renderFilterState();
@@ -405,7 +525,7 @@
         ['貼文', summary.totalPosts],
         ['含股票貼文', summary.postsWithStocks],
         ['股票數', summary.uniqueStocks],
-        ['買進/加碼訊號', summary.actionTotals.buy || 0],
+        ['基本面覆蓋', summary.fundamentalsCoverage || 0],
       ];
       document.getElementById('summary').innerHTML = metrics.map(([label, value]) => `
         <div class="metric">
@@ -475,8 +595,123 @@
       `).join('') : '<div class="empty">沒有符合條件的貼文。</div>';
     }
 
+    function renderStockAnalysis(stocks) {
+      const ranked = [...stocks]
+        .map((stock) => ({
+          ...stock,
+          mentionScore: scoreStock(stock),
+          tone: toneLabel(stock),
+          fundamentalScore: stock.fundamentals?.analysis?.score ?? -1,
+        }))
+        .sort((left, right) => right.fundamentalScore - left.fundamentalScore || right.mentionScore - left.mentionScore || right.count - left.count)
+        .slice(0, 6);
+      const maxScore = Math.max(1, ...ranked.map((stock) => Math.max(0, stock.fundamentalScore)));
+      document.getElementById('analysis-count').textContent = ranked.length ? `前 ${ranked.length} 檔` : '';
+      document.getElementById('analysis-cards').innerHTML = ranked.length ? ranked.map((stock) => `
+        <article class="analysis-card">
+          <h2>
+            ${renderStockName(stock)}
+            <span class="badge ${escapeAttr(fundamentalClass(stock.fundamentalScore))}">${escapeHtml(fundamentalLabel(stock.fundamentalScore))}</span>
+          </h2>
+          <div class="score-bar"><span style="width:${stock.fundamentalScore >= 0 ? Math.max(6, Math.round((stock.fundamentalScore / maxScore) * 100)) : 6}%"></span></div>
+          <div class="analysis-meta">
+            <div class="analysis-stat"><div class="label">收盤價</div><div class="value">${formatNumber(stock.fundamentals?.price)}</div></div>
+            <div class="analysis-stat"><div class="label">本益比</div><div class="value">${formatNumber(stock.fundamentals?.peRatio)}</div></div>
+            <div class="analysis-stat"><div class="label">股價淨值比</div><div class="value">${formatNumber(stock.fundamentals?.pbRatio)}</div></div>
+            <div class="analysis-stat"><div class="label">殖利率</div><div class="value">${formatPercent(stock.fundamentals?.dividendYield)}</div></div>
+            <div class="analysis-stat"><div class="label">季度 EPS</div><div class="value">${formatNumber(stock.fundamentals?.quarterlyEps)}</div></div>
+            <div class="analysis-stat"><div class="label">估算近四季 EPS</div><div class="value">${formatNumber(stock.fundamentals?.estimatedTtmEps)}</div></div>
+            <div class="analysis-stat"><div class="label">財報期別</div><div class="value small">${formatFiscal(stock.fundamentals)}</div></div>
+            <div class="analysis-stat"><div class="label">提及熱度</div><div class="value">${stock.mentionScore}</div></div>
+            <div class="analysis-stat"><div class="label">貼文訊號</div><div class="value small">${escapeHtml(primaryAction(stock))}</div></div>
+          </div>
+          <div class="badges">${renderBadges(Object.keys(stock.actions || {}))}</div>
+          <p>${escapeHtml(fundamentalNotes(stock))}</p>
+          <p class="muted">資料日期：${escapeHtml(formatDataDates(stock.fundamentals))}</p>
+        </article>
+      `).join('') : '<div class="empty">沒有符合條件的股票分析。</div>';
+    }
+
     function renderBadges(actions) {
       return actions.map((action) => `<span class="badge ${escapeAttr(action)}">${escapeHtml(labels[action] || action)}</span>`).join('');
+    }
+
+    function scoreStock(stock) {
+      return Math.max(0,
+        stock.count * 3
+        + actionCount(stock, 'buy') * 3
+        + actionCount(stock, 'limitUp') * 2
+        + actionCount(stock, 'watch')
+        - actionCount(stock, 'sell')
+        - actionCount(stock, 'limitDown') * 2
+      );
+    }
+
+    function toneLabel(stock) {
+      const positive = actionCount(stock, 'buy') + actionCount(stock, 'limitUp') + actionCount(stock, 'watch');
+      const negative = actionCount(stock, 'sell') + actionCount(stock, 'limitDown') + actionCount(stock, 'regret');
+      if (positive > negative + 1) return '偏多關注';
+      if (negative > positive + 1) return '偏空/風險';
+      return '多空混合';
+    }
+
+    function toneClass(tone) {
+      if (tone === '偏多關注') return 'positive';
+      if (tone === '偏空/風險') return 'negative';
+      return 'mixed';
+    }
+
+    function primaryAction(stock) {
+      const entries = Object.entries(stock.actions || {}).sort((left, right) => right[1] - left[1]);
+      return entries.length ? labels[entries[0][0]] || entries[0][0] : '僅提及';
+    }
+
+    function actionCount(stock, action) {
+      return Number((stock.actions || {})[action] || 0);
+    }
+
+    function fundamentalLabel(score) {
+      if (score === undefined || score < 0) return '資料不足';
+      if (score >= 65) return '指標較佳';
+      if (score >= 45) return '中性觀察';
+      return '風險較高';
+    }
+
+    function fundamentalClass(score) {
+      if (score === undefined || score < 0) return 'mixed';
+      if (score >= 65) return 'positive';
+      if (score >= 45) return 'mixed';
+      return 'negative';
+    }
+
+    function fundamentalNotes(stock) {
+      const notes = stock.fundamentals?.analysis?.notes || [];
+      if (!stock.fundamentals) return '官方基本面資料暫缺，僅能顯示貼文提及脈絡。';
+      return notes.length ? notes.join('；') : '官方基本面資料已取得，但尚無明顯指標註記。';
+    }
+
+    function formatDataDates(fundamentals) {
+      if (!fundamentals) return '無';
+      return [
+        fundamentals.priceDate ? `行情 ${fundamentals.priceDate}` : '',
+        fundamentals.valuationDate ? `估值 ${fundamentals.valuationDate}` : '',
+        fundamentals.financialDate ? `財報 ${fundamentals.financialDate}` : '',
+      ].filter(Boolean).join('｜') || '無';
+    }
+
+    function formatFiscal(fundamentals) {
+      if (!fundamentals?.fiscalYear || !fundamentals?.fiscalQuarter) return '-';
+      return `${fundamentals.fiscalYear} 年 Q${fundamentals.fiscalQuarter}`;
+    }
+
+    function formatNumber(value) {
+      if (value === null || value === undefined || value === '') return '-';
+      return Number(value).toLocaleString('zh-TW', { maximumFractionDigits: 2 });
+    }
+
+    function formatPercent(value) {
+      if (value === null || value === undefined || value === '') return '-';
+      return `${formatNumber(value)}%`;
     }
 
     function resetFilters() {

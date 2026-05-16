@@ -2,5 +2,6 @@ node_modules/
 .threads-cdp-profile/
 .threads-profile/
 data/raw.json
+data/fundamentals.json
 data/stock_universe.json
 site/

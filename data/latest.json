@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-05-16T20:46:31.504Z",
+  "generatedAt": "2026-05-16T21:56:02.089Z",
   "source": {
     "target": "https://www.threads.com/@evachien.chien",
     "finalUrl": "https://www.threads.com/@evachien.chien",
     "title": "Olivia Chien（@evachien.chien） • Threads，暢所欲言",
-    "fetchedAt": "2026-05-16T20:46:22.343Z",
+    "fetchedAt": "2026-05-16T21:55:52.545Z",
     "postsFound": 4
   },
   "summary": {
     "totalPosts": 4,
-    "postsWithStocks": 4,
-    "uniqueStocks": 22,
+    "postsWithStocks": 3,
+    "uniqueStocks": 18,
     "topStocks": [
       {
         "code": "3665",
@@ -64,15 +64,6 @@
         }
       },
       {
-        "code": "2344",
-        "name": "華邦電",
-        "count": 2,
-        "actions": {
-          "limitUp": 1,
-          "watch": 1
-        }
-      },
-      {
         "code": "4749",
         "name": "新應材",
         "count": 2,
@@ -108,6 +99,15 @@
         "actions": {
           "limitUp": 1
         }
+      },
+      {
+        "code": "6223",
+        "name": "旺矽",
+        "count": 1,
+        "actions": {
+          "limitUp": 1,
+          "watch": 1
+        }
       }
     ],
     "actionTotals": {
@@ -117,7 +117,22 @@
       "watch": 9,
       "regret": 3,
       "limitUp": 8
-    }
+    },
+    "fundamentalsCoverage": 18
+  },
+  "dataSources": {
+    "price": [
+      "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
+      "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
+    ],
+    "valuation": [
+      "https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL",
+      "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_peratio_analysis"
+    ],
+    "eps": [
+      "https://openapi.twse.com.tw/v1/opendata/t187ap14_L",
+      "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O"
+    ]
   },
   "stocks": [
     {
@@ -173,7 +188,43 @@
           ],
           "snippet": "今天亮三顆燈💡+🤡 「旺宏」漲停 「貿聯」、「健策」跌停 我就說真的不能透露對帳單和持股，真的只有財神爺跟自己能看而已😭😭😭我的錢飛了💸 「貿聯」HPC新舊平台的世代轉換造成暫時性的組合及稼動 今天亮三顆燈💡+🤡 「旺宏」漲停 「貿聯」、「健策」跌停 我就說真的不能透露對帳單和持股，真的只有財神爺跟自己能看而已😭😭😭我的錢飛了💸 「貿聯」HPC新舊平台的世代轉換造成暫時性的組合及稼動率影響，而車用與工廠自動化業務"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "3665",
+        "name": "貿聯控股(BizLink Holding Inc.)",
+        "market": "TWSE",
+        "price": 2095,
+        "change": -155,
+        "priceDate": "1150515",
+        "peRatio": 42.28,
+        "dividendYield": 0.72,
+        "pbRatio": 8.76,
+        "valuationDate": "1150515",
+        "industry": "其他電子業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 11.66,
+        "revenue": 20863649,
+        "operatingProfit": 3108361,
+        "netIncome": 2273476,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 49.55,
+        "annualizedQuarterlyEps": 46.64,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 11.66",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "3008",
@@ -215,7 +266,41 @@
           ],
           "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。 「大立光」2250-〉3135 「智邦」2350-》2675，底下買的960還留著！"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "3008",
+        "name": "大立光電股份有限公司",
+        "market": "TWSE",
+        "price": 3445,
+        "change": 310,
+        "priceDate": "1150515",
+        "peRatio": 21.5,
+        "dividendYield": 2.32,
+        "pbRatio": 2.44,
+        "valuationDate": "1150515",
+        "industry": "光電業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 46.63,
+        "revenue": 15544079,
+        "operatingProfit": 5812218,
+        "netIncome": 6175912,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 160.23,
+        "annualizedQuarterlyEps": 186.52,
+        "analysis": {
+          "flags": [
+            "normal-pe",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比位於常見合理區間，仍需和同產業比較",
+            "最新季度 EPS 為 46.63",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 66
+        }
+      }
     },
     {
       "code": "3037",
@@ -248,7 +333,43 @@
           "actions": [],
           "snippet": "而「貿聯」、「健策」、「欣興」表現不好，今天漲PCB，但欣興南電沒漲，希望不是我想的那樣？"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "3037",
+        "name": "欣興電子股份有限公司",
+        "market": "TWSE",
+        "price": 821,
+        "change": -60,
+        "priceDate": "1150515",
+        "peRatio": 120.74,
+        "dividendYield": 0.24,
+        "pbRatio": 11.5,
+        "valuationDate": "1150515",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3.28,
+        "revenue": 37446455,
+        "operatingProfit": 2756634,
+        "netIncome": 5380738,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 6.8,
+        "annualizedQuarterlyEps": 13.12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 3.28",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "5439",
@@ -291,7 +412,44 @@
           ],
           "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。 立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "5439",
+        "name": "高技企業股份有限公司",
+        "market": "TPEx",
+        "price": 391,
+        "change": -20,
+        "priceDate": "1150515",
+        "peRatio": 25.52,
+        "dividendYield": 1.84,
+        "pbRatio": 8.51,
+        "dividendPerShare": 7.2,
+        "valuationDate": "1150515",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3.51,
+        "revenue": 2537737,
+        "operatingProfit": 367408,
+        "netIncome": 326549,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 15.32,
+        "annualizedQuarterlyEps": 14.04,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 3.51",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 46
+        }
+      }
     },
     {
       "code": "3653",
@@ -324,42 +482,43 @@
           ],
           "snippet": "今天亮三顆燈💡+🤡 「旺宏」漲停 「貿聯」、「健策」跌停 我就說真的不能透露對帳單和持股，真的只有財神爺跟自己能看而已😭😭😭我的錢飛了💸 「貿聯」HPC新舊平台的世代轉換造成暫時性的組合及稼動率影響，而"
         }
-      ]
-    },
-    {
-      "code": "2344",
-      "name": "華邦電",
-      "market": "TWSE",
-      "count": 2,
-      "actions": {
-        "limitUp": 1,
-        "watch": 1
-      },
-      "posts": [
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
-          "time": "2天",
-          "topic": "股票日常",
-          "aliases": [
-            "華邦電"
+      ],
+      "fundamentals": {
+        "code": "3653",
+        "name": "健策精密工業股份有限公司",
+        "market": "TWSE",
+        "price": 3465,
+        "change": 100,
+        "priceDate": "1150515",
+        "peRatio": 95.85,
+        "dividendYield": 0.63,
+        "pbRatio": 24,
+        "valuationDate": "1150515",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 9.53,
+        "revenue": 5305216,
+        "operatingProfit": 1696566,
+        "netIncome": 1404530,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 36.15,
+        "annualizedQuarterlyEps": 38.12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
           ],
-          "actions": [
-            "limitUp",
-            "watch"
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 9.53",
+            "有現金殖利率，但不是高息型訊號"
           ],
-          "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。"
-        },
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-          "time": "4天",
-          "topic": "股東會紀念品",
-          "aliases": [
-            "華邦電"
-          ],
-          "actions": [],
-          "snippet": "art.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！"
+          "score": 40
         }
-      ]
+      }
     },
     {
       "code": "4749",
@@ -397,7 +556,44 @@
           ],
           "snippet": "思科盤後大漲，就預計我智邦今天會漲停😆開心 買 「貿聯」2250 「新應材」1120，第一次買，試試看！"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "4749",
+        "name": "新應材股份有限公司",
+        "market": "TPEx",
+        "price": 1015,
+        "change": -105,
+        "priceDate": "1150515",
+        "peRatio": 80.05,
+        "dividendYield": 0.79,
+        "pbRatio": 10.53,
+        "dividendPerShare": 8,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3.66,
+        "revenue": 1245693,
+        "operatingProfit": 337159,
+        "netIncome": 338795,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 12.68,
+        "annualizedQuarterlyEps": 14.64,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 3.66",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "3081",
@@ -435,7 +631,44 @@
           ],
           "snippet": "買 「貿聯」2500 （跌停） 「嘉澤」2615 「聯亞」2820 「創意」5180"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "3081",
+        "name": "聯亞光電工業股份有限公司",
+        "market": "TPEx",
+        "price": 2655,
+        "change": -290,
+        "priceDate": "1150515",
+        "peRatio": 348.88,
+        "dividendYield": 0.15,
+        "pbRatio": 57.94,
+        "dividendPerShare": 4,
+        "valuationDate": "1150515",
+        "industry": "通信網路業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3.44,
+        "revenue": 904389,
+        "operatingProfit": 373230,
+        "netIncome": 317515,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 7.61,
+        "annualizedQuarterlyEps": 13.76,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 3.44",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "6291",
@@ -460,7 +693,44 @@
           ],
           "snippet": "🫣 ———————————————— 出 「沛亨」433-》501，底下409買的還留著！"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "6291",
+        "name": "沛亨半導體股份有限公司",
+        "market": "TPEx",
+        "price": 462.5,
+        "change": -46.5,
+        "priceDate": "1150515",
+        "peRatio": 54.03,
+        "dividendYield": 1.3,
+        "pbRatio": 15.19,
+        "dividendPerShare": 6,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3,
+        "revenue": 660065,
+        "operatingProfit": 148757,
+        "netIncome": 127072,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 8.56,
+        "annualizedQuarterlyEps": 12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 3",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "2337",
@@ -483,7 +753,41 @@
           ],
           "snippet": "今天亮三顆燈💡+🤡 「旺宏」漲停 「貿聯」、「健策」跌停 我就說真的不能透露對帳單和持股，真的只有財神爺跟自己能看而已😭😭😭我的錢飛了💸 「貿聯」HPC新舊平台的世代轉換造成暫時"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "2337",
+        "name": "旺宏電子股份有限公司",
+        "market": "TWSE",
+        "price": 162.5,
+        "change": -6.5,
+        "priceDate": "1150515",
+        "peRatio": null,
+        "dividendYield": null,
+        "pbRatio": 6.35,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 0.9,
+        "revenue": 10468868,
+        "operatingProfit": 1932572,
+        "netIncome": 1779369,
+        "financialDate": "1150517",
+        "estimatedTtmEps": null,
+        "annualizedQuarterlyEps": 3.6,
+        "analysis": {
+          "flags": [
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比資料不足或不適用",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 0.9"
+          ],
+          "score": 50
+        }
+      }
     },
     {
       "code": "6223",
@@ -508,7 +812,44 @@
           ],
           "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。 4/24時，我叫我妹趕快進「旺矽」，她當空氣，旺矽入MSCI，棒棒，這是我看好的第三檔萬元股！"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "6223",
+        "name": "旺矽科技股份有限公司",
+        "market": "TPEx",
+        "price": 5895,
+        "change": -395,
+        "priceDate": "1150515",
+        "peRatio": 156.95,
+        "dividendYield": 0.37,
+        "pbRatio": 36.66,
+        "dividendPerShare": 22,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 12.53,
+        "revenue": 3933067,
+        "operatingProfit": 1273010,
+        "netIncome": 1227478,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 37.56,
+        "annualizedQuarterlyEps": 50.12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 12.53",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "8046",
@@ -527,7 +868,43 @@
           "actions": [],
           "snippet": "而「貿聯」、「健策」、「欣興」表現不好，今天漲PCB，但欣興南電沒漲，希望不是我想的那樣？"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "8046",
+        "name": "南亞電路板股份有限公司",
+        "market": "TWSE",
+        "price": 786,
+        "change": -61,
+        "priceDate": "1150515",
+        "peRatio": 166.53,
+        "dividendYield": 0.25,
+        "pbRatio": 10.87,
+        "valuationDate": "1150515",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 2.03,
+        "revenue": 11177241,
+        "operatingProfit": 1352237,
+        "netIncome": 1308626,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 4.72,
+        "annualizedQuarterlyEps": 8.12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 2.03",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "6227",
@@ -556,64 +933,42 @@
           ],
           "snippet": "比較可惜是茂綸，我在4/1進場茂綸91.6，但一直盤，在94出場，還說要買回來，他就一路上去，今天漲停了，真的很可惜，祝福他前程似錦！"
         }
-      ]
-    },
-    {
-      "code": "3706",
-      "name": "神達",
-      "market": "TWSE",
-      "count": 1,
-      "actions": {},
-      "posts": [
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-          "time": "4天",
-          "topic": "股東會紀念品",
-          "aliases": [
-            "神達"
+      ],
+      "fundamentals": {
+        "code": "6227",
+        "name": "茂綸股份有限公司",
+        "market": "TPEx",
+        "price": 124.5,
+        "change": 11,
+        "priceDate": "1150515",
+        "peRatio": 14.28,
+        "dividendYield": 3.61,
+        "pbRatio": 3.29,
+        "dividendPerShare": 4.5,
+        "valuationDate": "1150515",
+        "industry": "電子通路業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 3,
+        "revenue": 4844098,
+        "operatingProfit": 296341,
+        "netIncome": 231907,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 8.72,
+        "annualizedQuarterlyEps": 12,
+        "analysis": {
+          "flags": [
+            "normal-pe",
+            "positive-eps"
           ],
-          "actions": [],
-          "snippet": "我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法😮‍💨"
-        }
-      ]
-    },
-    {
-      "code": "2104",
-      "name": "國際中橡",
-      "market": "TWSE",
-      "count": 1,
-      "actions": {},
-      "posts": [
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-          "time": "4天",
-          "topic": "股東會紀念品",
-          "aliases": [
-            "國際中橡"
+          "notes": [
+            "本益比位於常見合理區間，仍需和同產業比較",
+            "最新季度 EPS 為 3",
+            "有現金殖利率，但不是高息型訊號"
           ],
-          "actions": [],
-          "snippet": "股東會紀念品兌換part.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！ 我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法"
+          "score": 66
         }
-      ]
-    },
-    {
-      "code": "2482",
-      "name": "連宇",
-      "market": "TWSE",
-      "count": 1,
-      "actions": {},
-      "posts": [
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-          "time": "4天",
-          "topic": "股東會紀念品",
-          "aliases": [
-            "連宇"
-          ],
-          "actions": [],
-          "snippet": "股東會紀念品兌換part.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！ 我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法"
-        }
-      ]
+      }
     },
     {
       "code": "3443",
@@ -636,7 +991,43 @@
           ],
           "snippet": "買 「貿聯」2500 （跌停） 「嘉澤」2615 「聯亞」2820 「創意」5180"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "3443",
+        "name": "創意電子股份有限公司",
+        "market": "TWSE",
+        "price": 4845,
+        "change": -230,
+        "priceDate": "1150515",
+        "peRatio": 145.76,
+        "dividendYield": 0.41,
+        "pbRatio": 44.52,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 12.28,
+        "revenue": 11447812,
+        "operatingProfit": 1824178,
+        "netIncome": 1646240,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 33.24,
+        "annualizedQuarterlyEps": 49.12,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 12.28",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     },
     {
       "code": "2345",
@@ -663,7 +1054,102 @@
           ],
           "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。 「大立光」2250-〉3135 「智邦」2350-》2675，底下買的960還留著！ 思科盤後大漲，就預計我智邦今天會漲停😆開心 買 「貿聯」2250 「新應材」1120，第一次買"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "2345",
+        "name": "智邦科技股份有限公司",
+        "market": "TWSE",
+        "price": 2505,
+        "change": -170,
+        "priceDate": "1150515",
+        "peRatio": 47.37,
+        "dividendYield": 0.6,
+        "pbRatio": 21.43,
+        "valuationDate": "1150515",
+        "industry": "通信網路業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 14.92,
+        "revenue": 70120741,
+        "operatingProfit": 10048687,
+        "netIncome": 8333109,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 52.88,
+        "annualizedQuarterlyEps": 59.68,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 14.92",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
+    },
+    {
+      "code": "2344",
+      "name": "華邦電",
+      "market": "TWSE",
+      "count": 1,
+      "actions": {
+        "limitUp": 1,
+        "watch": 1
+      },
+      "posts": [
+        {
+          "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
+          "time": "2天",
+          "topic": "股票日常",
+          "aliases": [
+            "華邦電"
+          ],
+          "actions": [
+            "limitUp",
+            "watch"
+          ],
+          "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。"
+        }
+      ],
+      "fundamentals": {
+        "code": "2344",
+        "name": "華邦電子股份有限公司",
+        "market": "TWSE",
+        "price": 129.5,
+        "change": -4.5,
+        "priceDate": "1150515",
+        "peRatio": 38.43,
+        "dividendYield": 0.39,
+        "pbRatio": 5,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 2.25,
+        "revenue": 38253064,
+        "operatingProfit": 12550494,
+        "netIncome": 10117678,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 3.37,
+        "annualizedQuarterlyEps": 9,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "最新季度 EPS 為 2.25",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 54
+        }
+      }
     },
     {
       "code": "8299",
@@ -688,7 +1174,44 @@
           ],
           "snippet": "今天亮七顆燈💡+🤡 「華邦電」、「高技」、「智邦」、「群聯」、「大立光」、「旺矽」漲停 「貿聯」跌停 我之前在3月多的文章有提到「華邦電」等ECB發行完畢，籌碼沉澱，股價會恢復他應有的基本面，至少142元，再來驗證看看👍 「高技」盤了很久，終於漲停。"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "8299",
+        "name": "群聯電子股份有限公司",
+        "market": "TPEx",
+        "price": 2650,
+        "change": -230,
+        "priceDate": "1150515",
+        "peRatio": 25.35,
+        "dividendYield": 0.88,
+        "pbRatio": 7.9,
+        "dividendPerShare": 23.2283164,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 68.8,
+        "revenue": 40966953,
+        "operatingProfit": 14840530,
+        "netIncome": 15174981,
+        "financialDate": "1150516",
+        "estimatedTtmEps": 104.54,
+        "annualizedQuarterlyEps": 275.2,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 68.8",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 46
+        }
+      }
     },
     {
       "code": "3533",
@@ -711,26 +1234,43 @@
           ],
           "snippet": "買 「貿聯」2500 （跌停） 「嘉澤」2615 「聯亞」2820 「創意」5180"
         }
-      ]
-    },
-    {
-      "code": "1529",
-      "name": "樂事綠能",
-      "market": "TWSE",
-      "count": 1,
-      "actions": {},
-      "posts": [
-        {
-          "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-          "time": "4天",
-          "topic": "股東會紀念品",
-          "aliases": [
-            "樂事綠能"
+      ],
+      "fundamentals": {
+        "code": "3533",
+        "name": "嘉澤端子工業股份有限公司",
+        "market": "TWSE",
+        "price": 2330,
+        "change": -120,
+        "priceDate": "1150515",
+        "peRatio": 32.74,
+        "dividendYield": 1.5,
+        "pbRatio": 6.24,
+        "valuationDate": "1150515",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 21.37,
+        "revenue": 9327579,
+        "operatingProfit": 2708466,
+        "netIncome": 2431334,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 71.17,
+        "annualizedQuarterlyEps": 85.48,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
           ],
-          "actions": [],
-          "snippet": "rt.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！"
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 21.37",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 46
         }
-      ]
+      }
     },
     {
       "code": "7769",
@@ -749,12 +1289,56 @@
           "actions": [],
           "snippet": "加油，超越鴻勁！"
         }
-      ]
+      ],
+      "fundamentals": {
+        "code": "7769",
+        "name": "鴻勁精密股份有限公司",
+        "market": "TWSE",
+        "price": 6895,
+        "change": -665,
+        "priceDate": "1150515",
+        "peRatio": 86.04,
+        "dividendYield": 0.94,
+        "pbRatio": 19.78,
+        "valuationDate": "1150515",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 25.7,
+        "revenue": 10725197,
+        "operatingProfit": 5360051,
+        "netIncome": 4624266,
+        "financialDate": "1150517",
+        "estimatedTtmEps": 80.14,
+        "annualizedQuarterlyEps": 102.8,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 25.7",
+            "有現金殖利率，但不是高息型訊號"
+          ],
+          "score": 40
+        }
+      }
     }
   ],
   "posts": [
     {
       "index": 0,
+      "url": "https://www.threads.com/@evachien.chien/post/DYahFWMk5lm",
+      "topic": "股票日常",
+      "time": "38分鐘",
+      "text": "我之前文章有提到目前散熱和ABF跌，會不會真的就不需要CoWoS？ 但事實上，CoWoS目前仍是AI晶片主流封裝技術，且技術成熟、良率穩定，短期內難以被完全取代。而CoWoP目前仍處於開發中的狀態，這篇文章，有提到玻璃基板的文章，寫的很詳細，引用給股友們了解！此外版主Benjamin 平常也常常會分析股市AI的議題，言之有物，大家可以追蹤一下，以利知識增長👍",
+      "mentions": []
+    },
+    {
+      "index": 1,
       "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
       "topic": "股票日常",
       "time": "1天",
@@ -872,7 +1456,7 @@
       ]
     },
     {
-      "index": 1,
+      "index": 2,
       "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
       "topic": "股票日常",
       "time": "2天",
@@ -1075,7 +1659,7 @@
       ]
     },
     {
-      "index": 2,
+      "index": 3,
       "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
       "topic": "股票日常",
       "time": "3天",
@@ -1168,77 +1752,6 @@
           ],
           "contexts": [
             "買 「貿聯」2500 （跌停） 「嘉澤」2615 「聯亞」2820 「創意」5180"
-          ]
-        }
-      ]
-    },
-    {
-      "index": 3,
-      "url": "https://www.threads.com/@evachien.chien/post/DYO7IWdEXa4",
-      "topic": "股東會紀念品",
-      "time": "4天",
-      "text": "股東會紀念品兌換part.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法😮‍💨",
-      "mentions": [
-        {
-          "code": "2104",
-          "name": "國際中橡",
-          "market": "TWSE",
-          "aliases": [
-            "國際中橡"
-          ],
-          "actions": [],
-          "contexts": [
-            "股東會紀念品兌換part.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！",
-            "我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法😮‍💨"
-          ]
-        },
-        {
-          "code": "1529",
-          "name": "樂事綠能",
-          "market": "TWSE",
-          "aliases": [
-            "樂事綠能"
-          ],
-          "actions": [],
-          "contexts": [
-            "rt.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！"
-          ]
-        },
-        {
-          "code": "2344",
-          "name": "華邦電",
-          "market": "TWSE",
-          "aliases": [
-            "華邦電"
-          ],
-          "actions": [],
-          "contexts": [
-            "art.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！"
-          ]
-        },
-        {
-          "code": "2482",
-          "name": "連宇",
-          "market": "TWSE",
-          "aliases": [
-            "連宇"
-          ],
-          "actions": [],
-          "contexts": [
-            "股東會紀念品兌換part.3 前次請參考part.2 (115/5/7) 今天放假又到處換股東會紀念品 上週5/7 我搞錯了 Salvon 皂是連宇的，我誤植為國際中橡，抱歉😞 樂事綠能-全家35元 華邦電-電池四顆（這是兌換第三張🫣，對！",
-            "我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法😮‍💨"
-          ]
-        },
-        {
-          "code": "3706",
-          "name": "神達",
-          "market": "TWSE",
-          "aliases": [
-            "神達"
-          ],
-          "actions": [],
-          "contexts": [
-            "我有三組了，昨天體脂計剛好沒電，就派上用場，一次換了四顆電池） 國際中橡-折疊環保提包 連宇-Savlon 皂組 神達-嘉禾牌家常麵無添加麵條 股東會紀念品換成這樣 還在說我買股唬爛 我也沒辦法😮‍💨"
           ]
         }
       ]
