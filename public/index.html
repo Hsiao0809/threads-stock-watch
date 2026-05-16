@@ -79,6 +79,9 @@
       border-color: rgba(94, 234, 212, 0.45);
       background: rgba(94, 234, 212, 0.1);
     }
+    .view-panel[hidden] {
+      display: none;
+    }
     h1 {
       margin: 0;
       font-size: 20px;
@@ -122,6 +125,22 @@
       grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
       gap: 10px;
       margin-bottom: 16px;
+    }
+    .analysis-header {
+      align-items: center;
+    }
+    .analysis-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      min-width: 0;
+    }
+    .analysis-controls select {
+      width: auto;
+      min-width: 168px;
+      height: 34px;
+      font-size: 13px;
     }
     input, select, .reset-filters {
       width: 100%;
@@ -398,6 +417,13 @@
       .meta {
         text-align: left;
       }
+      .analysis-header, .analysis-controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+      .analysis-controls select {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -407,8 +433,8 @@
       <div class="brand">
         <h1>Threads 台股提及分析</h1>
         <nav class="nav" aria-label="頁面">
-          <a href="#post-filter" aria-current="page">貼文篩選</a>
-          <a href="#stock-analysis">股票分析</a>
+          <a href="#post-filter" data-view="posts" aria-current="page">貼文篩選</a>
+          <a href="#stock-analysis" data-view="analysis">股票分析</a>
         </nav>
       </div>
       <div class="meta" id="meta">載入中</div>
@@ -417,52 +443,65 @@
 
   <main class="wrap">
     <div class="summary" id="summary"></div>
-    <div id="post-filter" class="toolbar">
-      <input id="search" type="search" placeholder="搜尋股票、代號、貼文文字">
-      <select id="action">
-        <option value="">全部行為</option>
-        <option value="buy">買進/加碼</option>
-        <option value="sell">賣出/出場</option>
-        <option value="limitUp">漲停</option>
-        <option value="limitDown">跌停</option>
-        <option value="watch">觀察/佈局</option>
-        <option value="regret">可惜/賣飛</option>
-      </select>
-      <select id="market">
-        <option value="">全部市場</option>
-        <option value="TWSE">上市</option>
-        <option value="TPEx">上櫃</option>
-      </select>
-      <button id="reset-filters" class="reset-filters" type="button">清除篩選</button>
-    </div>
 
-    <section id="stock-analysis" class="analysis-panel">
-      <div class="section-title"><span>基本面指標分析</span><span id="analysis-count"></span></div>
-      <div class="analysis-grid" id="analysis-cards"></div>
+    <section id="post-filter" class="view-panel" data-view-panel="posts">
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="搜尋股票、代號、貼文文字">
+        <select id="action">
+          <option value="">全部行為</option>
+          <option value="buy">買進/加碼</option>
+          <option value="sell">賣出/出場</option>
+          <option value="limitUp">漲停</option>
+          <option value="limitDown">跌停</option>
+          <option value="watch">觀察/佈局</option>
+          <option value="regret">可惜/賣飛</option>
+        </select>
+        <select id="market">
+          <option value="">全部市場</option>
+          <option value="TWSE">上市</option>
+          <option value="TPEx">上櫃</option>
+        </select>
+        <button id="reset-filters" class="reset-filters" type="button">清除篩選</button>
+      </div>
+
+      <div class="layout">
+        <section>
+          <div class="section-title"><span>股票列表</span><span id="stock-count"></span></div>
+          <div class="table">
+            <table>
+              <thead>
+                <tr>
+                  <th>股票</th>
+                  <th>次數</th>
+                  <th>訊號</th>
+                </tr>
+              </thead>
+              <tbody id="stocks"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title"><span>貼文對照</span><span id="post-count"></span></div>
+          <div class="posts" id="posts"></div>
+        </section>
+      </div>
     </section>
 
-    <div class="layout">
-      <section>
-        <div class="section-title"><span>股票列表</span><span id="stock-count"></span></div>
-        <div class="table">
-          <table>
-            <thead>
-              <tr>
-                <th>股票</th>
-                <th>次數</th>
-                <th>訊號</th>
-              </tr>
-            </thead>
-            <tbody id="stocks"></tbody>
-          </table>
+    <section id="stock-analysis" class="analysis-panel view-panel" data-view-panel="analysis" hidden>
+      <div class="section-title analysis-header">
+        <span>基本面指標分析</span>
+        <div class="analysis-controls">
+          <select id="analysis-sort" aria-label="股票分析排序">
+            <option value="fundamentalDesc">指標分數高到低</option>
+            <option value="mentionDesc">提及熱度高到低</option>
+            <option value="mentionAsc">提及熱度低到高</option>
+          </select>
+          <span id="analysis-count"></span>
         </div>
-      </section>
-
-      <section>
-        <div class="section-title"><span>貼文對照</span><span id="post-count"></span></div>
-        <div class="posts" id="posts"></div>
-      </section>
-    </div>
+      </div>
+      <div class="analysis-grid" id="analysis-cards"></div>
+    </section>
   </main>
 
   <script>
@@ -474,7 +513,15 @@
       watch: '觀察',
       regret: '可惜',
     };
-    const state = { data: null, selectedCode: '', query: '', action: '', market: '' };
+    const state = {
+      data: null,
+      selectedCode: '',
+      query: '',
+      action: '',
+      market: '',
+      view: initialView(),
+      analysisSort: 'fundamentalDesc',
+    };
 
     init();
 
@@ -497,7 +544,21 @@
         state.market = event.target.value;
         render();
       });
+      document.getElementById('analysis-sort').addEventListener('change', (event) => {
+        state.analysisSort = event.target.value;
+        renderStockAnalysis(state.data.stocks);
+      });
       document.getElementById('reset-filters').addEventListener('click', resetFilters);
+      document.querySelectorAll('[data-view]').forEach((link) => {
+        link.addEventListener('click', () => {
+          state.view = link.dataset.view === 'analysis' ? 'analysis' : 'posts';
+          renderView();
+        });
+      });
+      window.addEventListener('hashchange', () => {
+        state.view = initialView();
+        renderView();
+      });
       render();
     }
 
@@ -513,6 +574,23 @@
       throw new Error('找不到 latest.json');
     }
 
+    function initialView() {
+      return location.hash === '#stock-analysis' ? 'analysis' : 'posts';
+    }
+
+    function renderView() {
+      document.querySelectorAll('[data-view-panel]').forEach((panel) => {
+        panel.hidden = panel.dataset.viewPanel !== state.view;
+      });
+      document.querySelectorAll('[data-view]').forEach((link) => {
+        if (link.dataset.view === state.view) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
     function renderLoadError(error) {
       document.getElementById('meta').textContent = '資料讀取失敗';
       document.getElementById('summary').innerHTML = `
@@ -525,16 +603,18 @@
       document.getElementById('post-count').textContent = '0 篇';
       document.getElementById('posts').innerHTML = '<div class="empty">尚未取得貼文資料。</div>';
       document.getElementById('reset-filters').disabled = true;
+      renderView();
     }
 
     function render() {
       renderMeta();
       renderSummary();
       const stocks = filteredStocks();
-      renderStockAnalysis(stocks);
+      renderStockAnalysis(state.data.stocks);
       renderStocks(stocks);
       renderPosts(stocks);
       renderFilterState();
+      renderView();
     }
 
     function renderMeta() {
@@ -621,17 +701,15 @@
     }
 
     function renderStockAnalysis(stocks) {
-      const ranked = [...stocks]
+      const ranked = sortAnalysisStocks([...stocks]
         .map((stock) => ({
           ...stock,
           mentionScore: scoreStock(stock),
           tone: toneLabel(stock),
           fundamentalScore: stock.fundamentals?.analysis?.score ?? -1,
-        }))
-        .sort((left, right) => right.fundamentalScore - left.fundamentalScore || right.mentionScore - left.mentionScore || right.count - left.count)
-        .slice(0, 6);
+        })));
       const maxScore = Math.max(1, ...ranked.map((stock) => Math.max(0, stock.fundamentalScore)));
-      document.getElementById('analysis-count').textContent = ranked.length ? `前 ${ranked.length} 檔` : '';
+      document.getElementById('analysis-count').textContent = ranked.length ? `共 ${ranked.length} 檔` : '';
       document.getElementById('analysis-cards').innerHTML = ranked.length ? ranked.map((stock) => `
         <article class="analysis-card">
           <h2>
@@ -663,6 +741,16 @@
           <p class="muted">資料日期：${escapeHtml(formatDataDates(stock.fundamentals))}</p>
         </article>
       `).join('') : '<div class="empty">沒有符合條件的股票分析。</div>';
+    }
+
+    function sortAnalysisStocks(stocks) {
+      if (state.analysisSort === 'mentionDesc') {
+        return stocks.sort((left, right) => right.mentionScore - left.mentionScore || right.fundamentalScore - left.fundamentalScore || stockKey(left).localeCompare(stockKey(right)));
+      }
+      if (state.analysisSort === 'mentionAsc') {
+        return stocks.sort((left, right) => left.mentionScore - right.mentionScore || right.fundamentalScore - left.fundamentalScore || stockKey(left).localeCompare(stockKey(right)));
+      }
+      return stocks.sort((left, right) => right.fundamentalScore - left.fundamentalScore || right.mentionScore - left.mentionScore || right.count - left.count);
     }
 
     function renderBadges(actions) {
@@ -775,8 +863,9 @@
 
     function renderStockName(stock) {
       const url = tradingViewUrl(stock);
-      if (!url) return `<span class="stock-link">${escapeHtml(stock.name)}</span>`;
-      return `<a class="stock-link" href="${escapeAttr(url)}" target="_blank" rel="noreferrer" title="在 TradingView 開啟 ${escapeAttr(stock.name)}">${escapeHtml(stock.name)}</a>`;
+      const label = [stock.name, stock.code].filter(Boolean).join(' ');
+      if (!url) return `<span class="stock-link">${escapeHtml(label)}</span>`;
+      return `<a class="stock-link" href="${escapeAttr(url)}" target="_blank" rel="noreferrer" title="在 TradingView 開啟 ${escapeAttr(label)}">${escapeHtml(label)}</a>`;
     }
 
     function tradingViewUrl(stock) {
