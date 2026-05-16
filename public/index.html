@@ -91,11 +91,11 @@
     }
     .toolbar {
       display: grid;
-      grid-template-columns: 1.4fr 0.8fr 0.8fr;
+      grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
       gap: 10px;
       margin-bottom: 16px;
     }
-    input, select {
+    input, select, .reset-filters {
       width: 100%;
       height: 40px;
       border: 1px solid var(--line);
@@ -104,6 +104,23 @@
       background: var(--panel);
       color: var(--text);
       font-size: 14px;
+    }
+    .reset-filters {
+      appearance: none;
+      min-width: 112px;
+      background: var(--panel-2);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .reset-filters:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(94, 234, 212, 0.1);
+    }
+    .reset-filters:disabled {
+      cursor: default;
+      opacity: 0.45;
     }
     input::placeholder {
       color: #64748b;
@@ -299,6 +316,7 @@
         <option value="TWSE">上市</option>
         <option value="TPEx">上櫃</option>
       </select>
+      <button id="reset-filters" class="reset-filters" type="button">清除篩選</button>
     </div>
 
     <div class="layout">
@@ -353,6 +371,7 @@
         state.market = event.target.value;
         render();
       });
+      document.getElementById('reset-filters').addEventListener('click', resetFilters);
       render();
     }
 
@@ -372,6 +391,7 @@
       const stocks = filteredStocks();
       renderStocks(stocks);
       renderPosts(stocks);
+      renderFilterState();
     }
 
     function renderMeta() {
@@ -457,6 +477,22 @@
 
     function renderBadges(actions) {
       return actions.map((action) => `<span class="badge ${escapeAttr(action)}">${escapeHtml(labels[action] || action)}</span>`).join('');
+    }
+
+    function resetFilters() {
+      state.query = '';
+      state.action = '';
+      state.market = '';
+      state.selectedCode = '';
+      document.getElementById('search').value = '';
+      document.getElementById('action').value = '';
+      document.getElementById('market').value = '';
+      render();
+    }
+
+    function renderFilterState() {
+      const isFiltered = Boolean(state.query || state.action || state.market || state.selectedCode);
+      document.getElementById('reset-filters').disabled = !isFiltered;
     }
 
     function renderStockName(stock) {
