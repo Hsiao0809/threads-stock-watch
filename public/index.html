@@ -168,16 +168,35 @@
     tbody tr:hover {
       background: rgba(148, 163, 184, 0.08);
     }
+    .stock-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .stock-link {
+      color: var(--accent);
+      font-weight: 750;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
     button.stock-row {
       appearance: none;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      color: var(--accent);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-2);
+      padding: 2px 8px;
+      color: var(--muted);
       font: inherit;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       text-align: left;
+      white-space: nowrap;
+    }
+    button.stock-row:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
     .badges {
       display: flex;
@@ -395,9 +414,12 @@
     function renderStocks(stocks) {
       document.getElementById('stock-count').textContent = `${stocks.length} 檔`;
       document.getElementById('stocks').innerHTML = stocks.map((stock) => `
-        <tr data-selected="${stock.code === state.selectedCode}">
+        <tr data-selected="${stockKey(stock) === state.selectedCode}">
           <td>
-            <button class="stock-row" data-code="${escapeHtml(stock.code || stock.name)}">${escapeHtml(stock.name)}</button>
+            <div class="stock-main">
+              ${renderStockName(stock)}
+              <button class="stock-row" type="button" data-code="${escapeAttr(stockKey(stock))}" title="只看這檔股票">篩選</button>
+            </div>
             <div class="meta">${escapeHtml(stock.code || '')} ${escapeHtml(stock.market || '')}</div>
           </td>
           <td>${stock.count}</td>
@@ -413,7 +435,7 @@
     }
 
     function renderPosts(stocks) {
-      const stockKeys = new Set(stocks.map((stock) => stock.code || stock.name));
+      const stockKeys = new Set(stocks.map(stockKey));
       const posts = state.data.posts
         .map((post) => ({
           ...post,
@@ -435,6 +457,22 @@
 
     function renderBadges(actions) {
       return actions.map((action) => `<span class="badge ${escapeAttr(action)}">${escapeHtml(labels[action] || action)}</span>`).join('');
+    }
+
+    function renderStockName(stock) {
+      const url = tradingViewUrl(stock);
+      if (!url) return `<span class="stock-link">${escapeHtml(stock.name)}</span>`;
+      return `<a class="stock-link" href="${escapeAttr(url)}" target="_blank" rel="noreferrer" title="在 TradingView 開啟 ${escapeAttr(stock.name)}">${escapeHtml(stock.name)}</a>`;
+    }
+
+    function tradingViewUrl(stock) {
+      if (!stock.code) return '';
+      const exchange = stock.market === 'TPEx' ? 'TPEX' : 'TWSE';
+      return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(`${exchange}:${stock.code}`)}`;
+    }
+
+    function stockKey(stock) {
+      return stock.code || stock.name;
     }
 
     function highlight(html, mentions) {
