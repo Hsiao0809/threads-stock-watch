@@ -138,7 +138,7 @@
     }
     .analysis-controls select {
       width: auto;
-      min-width: 168px;
+      min-width: 220px;
       height: 34px;
       font-size: 13px;
     }
@@ -494,8 +494,33 @@
         <div class="analysis-controls">
           <select id="analysis-sort" aria-label="股票分析排序">
             <option value="fundamentalDesc">指標分數高到低</option>
+            <option value="fundamentalAsc">指標分數低到高</option>
             <option value="mentionDesc">提及熱度高到低</option>
             <option value="mentionAsc">提及熱度低到高</option>
+            <option value="priceDesc">收盤價高到低</option>
+            <option value="priceAsc">收盤價低到高</option>
+            <option value="peRatioDesc">本益比高到低</option>
+            <option value="peRatioAsc">本益比低到高</option>
+            <option value="pbRatioDesc">股價淨值比高到低</option>
+            <option value="pbRatioAsc">股價淨值比低到高</option>
+            <option value="dividendYieldDesc">殖利率高到低</option>
+            <option value="dividendYieldAsc">殖利率低到高</option>
+            <option value="quarterlyEpsDesc">季度 EPS 高到低</option>
+            <option value="quarterlyEpsAsc">季度 EPS 低到高</option>
+            <option value="estimatedTtmEpsDesc">估算近四季 EPS 高到低</option>
+            <option value="estimatedTtmEpsAsc">估算近四季 EPS 低到高</option>
+            <option value="revenueYoYDesc">營收 YoY 高到低</option>
+            <option value="revenueYoYAsc">營收 YoY 低到高</option>
+            <option value="cumulativeRevenueYoYDesc">累計營收 YoY 高到低</option>
+            <option value="cumulativeRevenueYoYAsc">累計營收 YoY 低到高</option>
+            <option value="grossMarginDesc">毛利率高到低</option>
+            <option value="grossMarginAsc">毛利率低到高</option>
+            <option value="roeDesc">ROE 高到低</option>
+            <option value="roeAsc">ROE 低到高</option>
+            <option value="debtRatioDesc">負債比高到低</option>
+            <option value="debtRatioAsc">負債比低到高</option>
+            <option value="fcfToNetIncomeRatioDesc">FCF / 淨利高到低</option>
+            <option value="fcfToNetIncomeRatioAsc">FCF / 淨利低到高</option>
           </select>
           <span id="analysis-count"></span>
         </div>
@@ -744,13 +769,69 @@
     }
 
     function sortAnalysisStocks(stocks) {
-      if (state.analysisSort === 'mentionDesc') {
-        return stocks.sort((left, right) => right.mentionScore - left.mentionScore || right.fundamentalScore - left.fundamentalScore || stockKey(left).localeCompare(stockKey(right)));
-      }
-      if (state.analysisSort === 'mentionAsc') {
-        return stocks.sort((left, right) => left.mentionScore - right.mentionScore || right.fundamentalScore - left.fundamentalScore || stockKey(left).localeCompare(stockKey(right)));
-      }
-      return stocks.sort((left, right) => right.fundamentalScore - left.fundamentalScore || right.mentionScore - left.mentionScore || right.count - left.count);
+      const sorters = {
+        fundamentalDesc: { key: 'fundamentalScore', direction: 'desc' },
+        fundamentalAsc: { key: 'fundamentalScore', direction: 'asc' },
+        mentionDesc: { key: 'mentionScore', direction: 'desc' },
+        mentionAsc: { key: 'mentionScore', direction: 'asc' },
+        priceDesc: { path: 'fundamentals.price', direction: 'desc' },
+        priceAsc: { path: 'fundamentals.price', direction: 'asc' },
+        peRatioDesc: { path: 'fundamentals.peRatio', direction: 'desc' },
+        peRatioAsc: { path: 'fundamentals.peRatio', direction: 'asc' },
+        pbRatioDesc: { path: 'fundamentals.pbRatio', direction: 'desc' },
+        pbRatioAsc: { path: 'fundamentals.pbRatio', direction: 'asc' },
+        dividendYieldDesc: { path: 'fundamentals.dividendYield', direction: 'desc' },
+        dividendYieldAsc: { path: 'fundamentals.dividendYield', direction: 'asc' },
+        quarterlyEpsDesc: { path: 'fundamentals.quarterlyEps', direction: 'desc' },
+        quarterlyEpsAsc: { path: 'fundamentals.quarterlyEps', direction: 'asc' },
+        estimatedTtmEpsDesc: { path: 'fundamentals.estimatedTtmEps', direction: 'desc' },
+        estimatedTtmEpsAsc: { path: 'fundamentals.estimatedTtmEps', direction: 'asc' },
+        revenueYoYDesc: { path: 'fundamentals.revenueYoY', direction: 'desc' },
+        revenueYoYAsc: { path: 'fundamentals.revenueYoY', direction: 'asc' },
+        cumulativeRevenueYoYDesc: { path: 'fundamentals.cumulativeRevenueYoY', direction: 'desc' },
+        cumulativeRevenueYoYAsc: { path: 'fundamentals.cumulativeRevenueYoY', direction: 'asc' },
+        grossMarginDesc: { path: 'fundamentals.grossMargin', direction: 'desc' },
+        grossMarginAsc: { path: 'fundamentals.grossMargin', direction: 'asc' },
+        roeDesc: { path: 'fundamentals.roe', direction: 'desc' },
+        roeAsc: { path: 'fundamentals.roe', direction: 'asc' },
+        debtRatioDesc: { path: 'fundamentals.debtRatio', direction: 'desc' },
+        debtRatioAsc: { path: 'fundamentals.debtRatio', direction: 'asc' },
+        fcfToNetIncomeRatioDesc: { path: 'fundamentals.fcfToNetIncomeRatio', direction: 'desc' },
+        fcfToNetIncomeRatioAsc: { path: 'fundamentals.fcfToNetIncomeRatio', direction: 'asc' },
+      };
+      const sorter = sorters[state.analysisSort] || sorters.fundamentalDesc;
+      return stocks.sort((left, right) => compareBySorter(left, right, sorter));
+    }
+
+    function compareBySorter(left, right, sorter) {
+      const leftValue = metricValue(left, sorter);
+      const rightValue = metricValue(right, sorter);
+      const leftMissing = leftValue === null;
+      const rightMissing = rightValue === null;
+      if (leftMissing && rightMissing) return fallbackCompare(left, right);
+      if (leftMissing) return 1;
+      if (rightMissing) return -1;
+      const direction = sorter.direction === 'asc' ? 1 : -1;
+      if (leftValue !== rightValue) return (leftValue - rightValue) * direction;
+      return fallbackCompare(left, right);
+    }
+
+    function metricValue(stock, sorter) {
+      const value = sorter.path ? valueAtPath(stock, sorter.path) : stock[sorter.key];
+      const number = Number(value);
+      if (sorter.key === 'fundamentalScore' && number < 0) return null;
+      return Number.isFinite(number) ? number : null;
+    }
+
+    function valueAtPath(source, path) {
+      return path.split('.').reduce((value, key) => value?.[key], source);
+    }
+
+    function fallbackCompare(left, right) {
+      return right.fundamentalScore - left.fundamentalScore
+        || right.mentionScore - left.mentionScore
+        || right.count - left.count
+        || stockKey(left).localeCompare(stockKey(right));
     }
 
     function renderBadges(actions) {
