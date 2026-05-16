@@ -1,0 +1,49 @@
+name: Update Threads Stock Dashboard
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 */4 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      THREADS_HANDLE: "@evachien.chien"
+      POST_PAGES: "4"
+      SCROLL_ROUNDS: "4"
+      SETTLE_MS: "3500"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: browser-actions/setup-chrome@v1
+      - run: npm run check
+      - run: npm run update
+      - run: |
+          mkdir -p site
+          cp public/index.html site/index.html
+          cp data/latest.json site/latest.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

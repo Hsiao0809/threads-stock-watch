@@ -1,0 +1,6 @@
+node_modules/
+.threads-cdp-profile/
+.threads-profile/
+data/raw.json
+data/stock_universe.json
+site/
