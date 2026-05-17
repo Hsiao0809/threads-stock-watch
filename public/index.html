@@ -224,6 +224,18 @@
       padding: 8px;
       background: rgba(22, 32, 51, 0.72);
     }
+    .analysis-stat.grade-good {
+      border-color: rgba(52, 211, 153, 0.48);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .analysis-stat.grade-watch {
+      border-color: rgba(251, 191, 36, 0.5);
+      background: rgba(251, 191, 36, 0.09);
+    }
+    .analysis-stat.grade-risk {
+      border-color: rgba(248, 113, 113, 0.5);
+      background: rgba(248, 113, 113, 0.09);
+    }
     .analysis-stat .label {
       color: var(--muted);
       font-size: 12px;
@@ -232,6 +244,15 @@
     .analysis-stat .value {
       font-size: 18px;
       font-weight: 750;
+    }
+    .analysis-stat.grade-good .value {
+      color: var(--good);
+    }
+    .analysis-stat.grade-watch .value {
+      color: var(--warn);
+    }
+    .analysis-stat.grade-risk .value {
+      color: var(--bad);
     }
     .analysis-stat .value.small {
       font-size: 14px;
@@ -743,22 +764,22 @@
           </h2>
           <div class="score-bar"><span style="width:${stock.fundamentalScore >= 0 ? Math.max(6, Math.round((stock.fundamentalScore / maxScore) * 100)) : 6}%"></span></div>
           <div class="analysis-meta">
-            <div class="analysis-stat"><div class="label">收盤價</div><div class="value">${formatNumber(stock.fundamentals?.price)}</div></div>
-            <div class="analysis-stat"><div class="label">本益比</div><div class="value">${formatNumber(stock.fundamentals?.peRatio)}</div></div>
-            <div class="analysis-stat"><div class="label">股價淨值比</div><div class="value">${formatNumber(stock.fundamentals?.pbRatio)}</div></div>
-            <div class="analysis-stat"><div class="label">殖利率</div><div class="value">${formatPercent(stock.fundamentals?.dividendYield)}</div></div>
-            <div class="analysis-stat"><div class="label">季度 EPS</div><div class="value">${formatNumber(stock.fundamentals?.quarterlyEps)}</div></div>
-            <div class="analysis-stat"><div class="label">估算近四季 EPS</div><div class="value">${formatNumber(stock.fundamentals?.estimatedTtmEps)}</div></div>
-            <div class="analysis-stat"><div class="label">營收 YoY</div><div class="value">${formatPercent(stock.fundamentals?.revenueYoY)}</div></div>
-            <div class="analysis-stat"><div class="label">累計營收 YoY</div><div class="value">${formatPercent(stock.fundamentals?.cumulativeRevenueYoY)}</div></div>
-            <div class="analysis-stat"><div class="label">毛利率</div><div class="value">${formatPercent(stock.fundamentals?.grossMargin)}</div></div>
-            <div class="analysis-stat"><div class="label">ROE</div><div class="value">${formatPercent(stock.fundamentals?.roe)}</div></div>
-            <div class="analysis-stat"><div class="label">負債比</div><div class="value">${formatPercent(stock.fundamentals?.debtRatio)}</div></div>
-            <div class="analysis-stat"><div class="label">FCF / 淨利</div><div class="value">${formatPercent(stock.fundamentals?.fcfToNetIncomeRatio)}</div></div>
-            <div class="analysis-stat"><div class="label">財報期別</div><div class="value small">${formatFiscal(stock.fundamentals)}</div></div>
-            <div class="analysis-stat"><div class="label">現金流期別</div><div class="value small">${escapeHtml(stock.fundamentals?.cashflowPeriod || '-')}</div></div>
-            <div class="analysis-stat"><div class="label">提及熱度</div><div class="value">${stock.mentionScore}</div></div>
-            <div class="analysis-stat"><div class="label">貼文訊號</div><div class="value small">${escapeHtml(primaryAction(stock))}</div></div>
+            ${renderMetric('收盤價', stock.fundamentals?.price, 'number', 'price')}
+            ${renderMetric('本益比', stock.fundamentals?.peRatio, 'number', 'peRatio')}
+            ${renderMetric('股價淨值比', stock.fundamentals?.pbRatio, 'number', 'pbRatio')}
+            ${renderMetric('殖利率', stock.fundamentals?.dividendYield, 'percent', 'dividendYield')}
+            ${renderMetric('季度 EPS', stock.fundamentals?.quarterlyEps, 'number', 'quarterlyEps')}
+            ${renderMetric('估算近四季 EPS', stock.fundamentals?.estimatedTtmEps, 'number', 'estimatedTtmEps')}
+            ${renderMetric('營收 YoY', stock.fundamentals?.revenueYoY, 'percent', 'revenueYoY')}
+            ${renderMetric('累計營收 YoY', stock.fundamentals?.cumulativeRevenueYoY, 'percent', 'cumulativeRevenueYoY')}
+            ${renderMetric('毛利率', stock.fundamentals?.grossMargin, 'percent', 'grossMargin')}
+            ${renderMetric('ROE', stock.fundamentals?.roe, 'percent', 'roe')}
+            ${renderMetric('負債比', stock.fundamentals?.debtRatio, 'percent', 'debtRatio')}
+            ${renderMetric('FCF / 淨利', stock.fundamentals?.fcfToNetIncomeRatio, 'percent', 'fcfToNetIncomeRatio')}
+            ${renderMetric('財報期別', formatFiscal(stock.fundamentals), 'text')}
+            ${renderMetric('現金流期別', stock.fundamentals?.cashflowPeriod || '-', 'text')}
+            ${renderMetric('提及熱度', stock.mentionScore, 'number')}
+            ${renderMetric('貼文訊號', primaryAction(stock), 'text')}
           </div>
           <div class="badges">${renderBadges(Object.keys(stock.actions || {}))}</div>
           <p>${escapeHtml(fundamentalNotes(stock))}</p>
@@ -801,6 +822,96 @@
       };
       const sorter = sorters[state.analysisSort] || sorters.fundamentalDesc;
       return stocks.sort((left, right) => compareBySorter(left, right, sorter));
+    }
+
+    function renderMetric(label, value, format = 'number', metric = '') {
+      const grade = metric ? metricGrade(metric, value) : '';
+      const help = metric ? metricHelp(metric) : '';
+      const classes = ['analysis-stat', grade ? `grade-${grade}` : ''].filter(Boolean).join(' ');
+      const valueClass = format === 'text' ? 'value small' : 'value';
+      return `
+        <div class="${classes}" ${help ? `title="${escapeAttr(help)}"` : ''}>
+          <div class="label">${escapeHtml(label)}</div>
+          <div class="${valueClass}">${formatMetricValue(value, format)}</div>
+        </div>
+      `;
+    }
+
+    function formatMetricValue(value, format) {
+      if (format === 'text') return escapeHtml(value || '-');
+      if (format === 'percent') return formatPercent(value);
+      return formatNumber(value);
+    }
+
+    function metricGrade(metric, value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return '';
+      switch (metric) {
+        case 'peRatio':
+          if (number <= 0) return 'risk';
+          if (number < 12) return 'good';
+          if (number <= 25) return '';
+          if (number <= 40) return 'watch';
+          return 'risk';
+        case 'pbRatio':
+          if (number <= 0) return '';
+          if (number < 1) return 'watch';
+          if (number <= 3) return 'good';
+          if (number <= 5) return 'watch';
+          return 'risk';
+        case 'dividendYield':
+          if (number >= 8) return 'watch';
+          if (number >= 4) return 'good';
+          return '';
+        case 'quarterlyEps':
+        case 'estimatedTtmEps':
+          if (number > 0) return 'good';
+          if (number < 0) return 'risk';
+          return '';
+        case 'revenueYoY':
+        case 'cumulativeRevenueYoY':
+          if (number >= 20) return 'good';
+          if (number < 0) return 'risk';
+          return '';
+        case 'grossMargin':
+          if (number >= 30) return 'good';
+          if (number < 10) return 'risk';
+          return '';
+        case 'roe':
+          if (number >= 20) return 'good';
+          if (number >= 5 && number < 10) return 'watch';
+          if (number < 5) return 'risk';
+          return '';
+        case 'debtRatio':
+          if (number <= 40) return 'good';
+          if (number <= 60) return '';
+          if (number <= 70) return 'watch';
+          return 'risk';
+        case 'fcfToNetIncomeRatio':
+          if (number >= 100) return 'good';
+          if (number >= 0 && number < 50) return 'watch';
+          if (number < 0) return 'risk';
+          return '';
+        default:
+          return '';
+      }
+    }
+
+    function metricHelp(metric) {
+      const guides = {
+        peRatio: '本益比分級：0 以下紅；低於 12 綠；12-25 中性；25-40 黃；40 以上紅。高低仍需同產業比較。',
+        pbRatio: '股價淨值比分級：低於 1 黃；1-3 綠；3-5 黃；5 以上紅。P/B 過低也可能反映資產品質或獲利疑慮。',
+        dividendYield: '殖利率分級：4%-8% 綠；8% 以上黃，避免把一次性高息或殖利率陷阱視為絕對利多。',
+        quarterlyEps: 'EPS 分級：正值綠，負值紅；EPS 絕對值仍需和股本、股價與同業比較。',
+        estimatedTtmEps: '估算近四季 EPS 分級：正值綠，負值紅；此值由股價與本益比反推，僅作快速參考。',
+        revenueYoY: '營收 YoY 分級：20% 以上綠；0%-20% 中性；負成長紅。',
+        cumulativeRevenueYoY: '累計營收 YoY 分級：20% 以上綠；0%-20% 中性；負成長紅。',
+        grossMargin: '毛利率分級：30% 以上綠；10%-30% 中性；低於 10% 紅。毛利率產業差異很大。',
+        roe: 'ROE 分級：20% 以上綠；10%-20% 中性；5%-10% 黃；低於 5% 紅。',
+        debtRatio: '負債比分級：40% 以下綠；40%-60% 中性；60%-70% 黃；70% 以上紅。',
+        fcfToNetIncomeRatio: 'FCF/淨利分級：100% 以上綠；50%-100% 中性；0%-50% 黃；負值紅。',
+      };
+      return guides[metric] || '';
     }
 
     function compareBySorter(left, right, sorter) {
