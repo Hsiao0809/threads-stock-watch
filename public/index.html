@@ -142,6 +142,47 @@
       height: 34px;
       font-size: 13px;
     }
+    .grade-filters {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .grade-filters button {
+      appearance: none;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 10px;
+      background: var(--panel-2);
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .grade-filters button:hover,
+    .grade-filters button[data-active="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(94, 234, 212, 0.1);
+    }
+    .grade-filters button[data-grade-filter="good"][data-active="true"] {
+      border-color: rgba(52, 211, 153, 0.58);
+      color: var(--good);
+      background: rgba(16, 185, 129, 0.13);
+    }
+    .grade-filters button[data-grade-filter="watch"][data-active="true"] {
+      border-color: rgba(251, 191, 36, 0.62);
+      color: var(--warn);
+      background: rgba(251, 191, 36, 0.12);
+    }
+    .grade-filters button[data-grade-filter="risk"][data-active="true"] {
+      border-color: rgba(248, 113, 113, 0.62);
+      color: var(--bad);
+      background: rgba(248, 113, 113, 0.12);
+    }
     input, select, .reset-filters {
       width: 100%;
       height: 40px;
@@ -442,6 +483,11 @@
         align-items: stretch;
         flex-direction: column;
       }
+      .grade-filters {
+        align-items: stretch;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .analysis-controls select {
         width: 100%;
       }
@@ -513,6 +559,12 @@
       <div class="section-title analysis-header">
         <span>基本面指標分析</span>
         <div class="analysis-controls">
+          <div class="grade-filters" id="grade-filters" aria-label="分級篩選">
+            <button type="button" data-grade-filter="" data-label="全部">全部</button>
+            <button type="button" data-grade-filter="good" data-label="綠色">綠色</button>
+            <button type="button" data-grade-filter="watch" data-label="黃色">黃色</button>
+            <button type="button" data-grade-filter="risk" data-label="紅色">紅色</button>
+          </div>
           <select id="analysis-sort" aria-label="股票分析排序">
             <option value="fundamentalDesc">指標分數高到低</option>
             <option value="fundamentalAsc">指標分數低到高</option>
@@ -567,6 +619,7 @@
       market: '',
       view: initialView(),
       analysisSort: 'fundamentalDesc',
+      analysisGrade: '',
     };
 
     init();
@@ -593,6 +646,12 @@
       document.getElementById('analysis-sort').addEventListener('change', (event) => {
         state.analysisSort = event.target.value;
         renderStockAnalysis(state.data.stocks);
+      });
+      document.querySelectorAll('[data-grade-filter]').forEach((button) => {
+        button.addEventListener('click', () => {
+          state.analysisGrade = button.dataset.gradeFilter || '';
+          renderStockAnalysis(state.data.stocks);
+        });
       });
       document.getElementById('reset-filters').addEventListener('click', resetFilters);
       document.querySelectorAll('[data-view]').forEach((link) => {
@@ -747,13 +806,14 @@
     }
 
     function renderStockAnalysis(stocks) {
-      const ranked = sortAnalysisStocks([...stocks]
-        .map((stock) => ({
-          ...stock,
-          mentionScore: scoreStock(stock),
-          tone: toneLabel(stock),
-          fundamentalScore: stock.fundamentals?.analysis?.score ?? -1,
-        })));
+      const enriched = [...stocks].map((stock) => ({
+        ...stock,
+        mentionScore: scoreStock(stock),
+        tone: toneLabel(stock),
+        fundamentalScore: stock.fundamentals?.analysis?.score ?? -1,
+      }));
+      renderGradeFilters(enriched);
+      const ranked = sortAnalysisStocks(enriched.filter(matchesGradeFilter));
       const maxScore = Math.max(1, ...ranked.map((stock) => Math.max(0, stock.fundamentalScore)));
       document.getElementById('analysis-count').textContent = ranked.length ? `共 ${ranked.length} 檔` : '';
       document.getElementById('analysis-cards').innerHTML = ranked.length ? ranked.map((stock) => `
@@ -841,6 +901,52 @@
       if (format === 'text') return escapeHtml(value || '-');
       if (format === 'percent') return formatPercent(value);
       return formatNumber(value);
+    }
+
+    function renderGradeFilters(stocks) {
+      const counts = { all: stocks.length, good: 0, watch: 0, risk: 0 };
+      for (const stock of stocks) {
+        const grades = stockGrades(stock);
+        if (grades.has('good')) counts.good += 1;
+        if (grades.has('watch')) counts.watch += 1;
+        if (grades.has('risk')) counts.risk += 1;
+      }
+      document.querySelectorAll('[data-grade-filter]').forEach((button) => {
+        const grade = button.dataset.gradeFilter || '';
+        const count = grade ? counts[grade] : counts.all;
+        button.dataset.active = String(grade === state.analysisGrade);
+        button.textContent = `${button.dataset.label} ${count}`;
+      });
+    }
+
+    function matchesGradeFilter(stock) {
+      return !state.analysisGrade || stockGrades(stock).has(state.analysisGrade);
+    }
+
+    function stockGrades(stock) {
+      const grades = new Set();
+      const fundamentals = stock.fundamentals || {};
+      for (const metric of gradedMetrics()) {
+        const grade = metricGrade(metric, fundamentals[metric]);
+        if (grade) grades.add(grade);
+      }
+      return grades;
+    }
+
+    function gradedMetrics() {
+      return [
+        'peRatio',
+        'pbRatio',
+        'dividendYield',
+        'quarterlyEps',
+        'estimatedTtmEps',
+        'revenueYoY',
+        'cumulativeRevenueYoY',
+        'grossMargin',
+        'roe',
+        'debtRatio',
+        'fcfToNetIncomeRatio',
+      ];
     }
 
     function metricGrade(metric, value) {
