@@ -316,26 +316,9 @@
       background: rgba(248, 113, 113, 0.09);
     }
     .analysis-stat .label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
       color: var(--muted);
       font-size: 12px;
       margin-bottom: 4px;
-    }
-    .metric-info {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 15px;
-      height: 15px;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      color: var(--accent);
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1;
-      cursor: help;
     }
     .analysis-stat .value {
       font-size: 18px;
@@ -949,12 +932,11 @@
 
     function renderMetric(label, value, format = 'number', metric = '') {
       const grade = metric ? metricGrade(metric, value) : '';
-      const help = metric ? metricHelp(metric) : metricDefinition(label);
       const classes = ['analysis-stat', grade ? `grade-${grade}` : ''].filter(Boolean).join(' ');
       const valueClass = format === 'text' ? 'value small' : 'value';
       return `
-        <div class="${classes}" ${help ? `title="${escapeAttr(help)}"` : ''}>
-          <div class="label">${escapeHtml(label)}${help ? `<span class="metric-info" title="${escapeAttr(help)}">?</span>` : ''}</div>
+        <div class="${classes}">
+          <div class="label">${escapeHtml(label)}</div>
           <div class="${valueClass}">${formatMetricValue(value, format)}</div>
         </div>
       `;
@@ -1093,46 +1075,6 @@
         default:
           return '';
       }
-    }
-
-    function metricHelp(metric) {
-      const definition = metricDefinition(metric);
-      const guides = {
-        peRatio: '本益比分級：0 以下紅；低於 12 綠；12-25 中性；25-40 黃；40 以上紅。高低仍需同產業比較。',
-        pbRatio: '股價淨值比分級：低於 1 黃；1-3 綠；3-5 黃；5 以上紅。P/B 過低也可能反映資產品質或獲利疑慮。',
-        dividendYield: '殖利率分級：4%-8% 綠；8% 以上黃，避免把一次性高息或殖利率陷阱視為絕對利多。',
-        quarterlyEps: 'EPS 分級：正值綠，負值紅；EPS 絕對值仍需和股本、股價與同業比較。',
-        estimatedTtmEps: '估算近四季 EPS 分級：正值綠，負值紅；此值由股價與本益比反推，僅作快速參考。',
-        revenueYoY: '營收 YoY 分級：20% 以上綠；0%-20% 中性；負成長紅。',
-        cumulativeRevenueYoY: '累計營收 YoY 分級：20% 以上綠；0%-20% 中性；負成長紅。',
-        grossMargin: '毛利率分級：30% 以上綠；10%-30% 中性；低於 10% 紅。毛利率產業差異很大。',
-        roe: 'ROE 分級：20% 以上綠；10%-20% 中性；5%-10% 黃；低於 5% 紅。',
-        debtRatio: '負債比分級：40% 以下綠；40%-60% 中性；60%-70% 黃；70% 以上紅。',
-        fcfToNetIncomeRatio: 'FCF/淨利分級：100% 以上綠；50%-100% 中性；0%-50% 黃；負值紅。',
-      };
-      return [definition, guides[metric]].filter(Boolean).join('\n');
-    }
-
-    function metricDefinition(metricOrLabel) {
-      const definitions = {
-        price: '收盤價：最近交易日最後成交價，用來確認目前市場價格。',
-        peRatio: '本益比：股價 / 每股盈餘，衡量股價相對獲利的倍數。',
-        pbRatio: '股價淨值比：股價 / 每股淨值，衡量股價相對帳面股東權益的倍數。',
-        dividendYield: '殖利率：每股現金股利 / 股價，衡量現金配息相對股價的比例。',
-        quarterlyEps: '季度 EPS：最新季度每股盈餘，代表單季每股獲利能力。',
-        estimatedTtmEps: '估算近四季 EPS：由股價 / 本益比反推的近四季每股盈餘估計值。',
-        revenueYoY: '營收 YoY：最新月營收相較去年同月的成長率。',
-        cumulativeRevenueYoY: '累計營收 YoY：今年累計營收相較去年同期的成長率。',
-        grossMargin: '毛利率：毛利 / 營收，衡量產品定價能力與成本控制。',
-        roe: 'ROE：淨利 / 股東權益，衡量運用股東資本創造獲利的效率。',
-        debtRatio: '負債比：總負債 / 總資產，衡量財務槓桿與償債壓力。',
-        fcfToNetIncomeRatio: 'FCF / 淨利：自由現金流 / 淨利，衡量獲利轉成現金的程度。',
-        提及熱度: '提及熱度：依貼文提及次數與語氣加權的社群熱度，不是基本面指標。',
-        財報期別: '財報期別：目前使用的最新公開財報年度與季度。',
-        現金流期別: '現金流期別：目前使用的 MOPSFIN 現金流資料期別。',
-        貼文訊號: '貼文訊號：從貼文文字判斷的主要語氣，例如買進、賣出、漲停或觀察。',
-      };
-      return definitions[metricOrLabel] || '';
     }
 
     function compareBySorter(left, right, sorter) {

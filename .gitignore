@@ -3,6 +3,7 @@ node_modules/
 .threads-profile/
 data/raw.json
 data/fundamentals.json
+data/latest.candidate.json
 data/stock_universe.json
 site/
 web.log
