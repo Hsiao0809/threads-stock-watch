@@ -236,6 +236,44 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
+    .metric-guide {
+      margin: 0 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(17, 24, 39, 0.76);
+      box-shadow: var(--shadow);
+    }
+    .metric-guide summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      color: var(--accent);
+      font-weight: 750;
+    }
+    .metric-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0 14px 14px;
+    }
+    .metric-guide-item {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: rgba(22, 32, 51, 0.68);
+    }
+    .metric-guide-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .metric-guide-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
     .analysis-card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -278,9 +316,26 @@
       background: rgba(248, 113, 113, 0.09);
     }
     .analysis-stat .label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       color: var(--muted);
       font-size: 12px;
       margin-bottom: 4px;
+    }
+    .metric-info {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      cursor: help;
     }
     .analysis-stat .value {
       font-size: 18px;
@@ -466,6 +521,9 @@
       .summary, .toolbar, .layout, .analysis-grid {
         grid-template-columns: 1fr;
       }
+      .metric-guide-grid {
+        grid-template-columns: 1fr;
+      }
       .topbar {
         align-items: flex-start;
         flex-direction: column;
@@ -598,6 +656,10 @@
           <span id="analysis-count"></span>
         </div>
       </div>
+      <details class="metric-guide">
+        <summary>指標說明與分級依據</summary>
+        <div class="metric-guide-grid" id="metric-guide"></div>
+      </details>
       <div class="analysis-grid" id="analysis-cards"></div>
     </section>
   </main>
@@ -664,6 +726,7 @@
         state.view = initialView();
         renderView();
       });
+      renderMetricGuide();
       render();
     }
 
@@ -886,15 +949,44 @@
 
     function renderMetric(label, value, format = 'number', metric = '') {
       const grade = metric ? metricGrade(metric, value) : '';
-      const help = metric ? metricHelp(metric) : '';
+      const help = metric ? metricHelp(metric) : metricDefinition(label);
       const classes = ['analysis-stat', grade ? `grade-${grade}` : ''].filter(Boolean).join(' ');
       const valueClass = format === 'text' ? 'value small' : 'value';
       return `
         <div class="${classes}" ${help ? `title="${escapeAttr(help)}"` : ''}>
-          <div class="label">${escapeHtml(label)}</div>
+          <div class="label">${escapeHtml(label)}${help ? `<span class="metric-info" title="${escapeAttr(help)}">?</span>` : ''}</div>
           <div class="${valueClass}">${formatMetricValue(value, format)}</div>
         </div>
       `;
+    }
+
+    function renderMetricGuide() {
+      const guide = document.getElementById('metric-guide');
+      if (!guide) return;
+      guide.innerHTML = metricGuideItems().map((item) => `
+        <div class="metric-guide-item">
+          <strong>${escapeHtml(item.label)}</strong>
+          <p>${escapeHtml(item.text)}</p>
+        </div>
+      `).join('');
+    }
+
+    function metricGuideItems() {
+      return [
+        { label: '收盤價', text: '最近交易日收盤價，用來確認目前市場價格。本身不代表便宜或昂貴，通常要搭配 EPS、本益比、成長率一起看。' },
+        { label: '本益比', text: '股價 / 每股盈餘，表示投資人願意用幾倍盈餘買進公司。低本益比可能代表便宜，也可能代表成長低或景氣循環風險。' },
+        { label: '股價淨值比', text: '股價 / 每股淨值，衡量股價相對帳面股東權益的倍數。資產型公司較常用，成長股通常會偏高。' },
+        { label: '殖利率', text: '每股現金股利 / 股價，表示現金配息相對股價的比例。高殖利率要再確認配息是否穩定、是否來自一次性盈餘。' },
+        { label: '季度 EPS', text: '最新季度每股盈餘，代表單季每股獲利能力。正值代表獲利，負值代表該期虧損。' },
+        { label: '估算近四季 EPS', text: '用股價 / 本益比反推的近四季 EPS，作為快速估算，不等同公司公告的完整逐季加總。' },
+        { label: '營收 YoY', text: '最新月營收相較去年同月的成長率，用來觀察近期需求與出貨動能。' },
+        { label: '累計營收 YoY', text: '今年累計營收相較去年同期的成長率，比單月營收更能降低短期波動影響。' },
+        { label: '毛利率', text: '毛利 / 營收，衡量產品定價能力、成本控制與產品組合。不同產業差異很大，適合同業比較。' },
+        { label: 'ROE', text: '淨利 / 股東權益，衡量公司運用股東資本創造獲利的效率。本頁以最新季度累計獲利年化估算。' },
+        { label: '負債比', text: '總負債 / 總資產，衡量資產中由負債支應的比例。比例越高，財務槓桿與償債壓力通常越高。' },
+        { label: 'FCF / 淨利', text: '自由現金流 / 淨利，用來看帳面獲利轉成現金的程度。本頁用營業活動現金流 + 投資活動現金流近似 FCF。' },
+        { label: '提及熱度', text: '依貼文提及次數與買進、漲停、觀察、賣出、跌停等語氣加權的社群熱度，不是基本面指標。' },
+      ];
     }
 
     function formatMetricValue(value, format) {
@@ -1004,6 +1096,7 @@
     }
 
     function metricHelp(metric) {
+      const definition = metricDefinition(metric);
       const guides = {
         peRatio: '本益比分級：0 以下紅；低於 12 綠；12-25 中性；25-40 黃；40 以上紅。高低仍需同產業比較。',
         pbRatio: '股價淨值比分級：低於 1 黃；1-3 綠；3-5 黃；5 以上紅。P/B 過低也可能反映資產品質或獲利疑慮。',
@@ -1017,7 +1110,29 @@
         debtRatio: '負債比分級：40% 以下綠；40%-60% 中性；60%-70% 黃；70% 以上紅。',
         fcfToNetIncomeRatio: 'FCF/淨利分級：100% 以上綠；50%-100% 中性；0%-50% 黃；負值紅。',
       };
-      return guides[metric] || '';
+      return [definition, guides[metric]].filter(Boolean).join('\n');
+    }
+
+    function metricDefinition(metricOrLabel) {
+      const definitions = {
+        price: '收盤價：最近交易日最後成交價，用來確認目前市場價格。',
+        peRatio: '本益比：股價 / 每股盈餘，衡量股價相對獲利的倍數。',
+        pbRatio: '股價淨值比：股價 / 每股淨值，衡量股價相對帳面股東權益的倍數。',
+        dividendYield: '殖利率：每股現金股利 / 股價，衡量現金配息相對股價的比例。',
+        quarterlyEps: '季度 EPS：最新季度每股盈餘，代表單季每股獲利能力。',
+        estimatedTtmEps: '估算近四季 EPS：由股價 / 本益比反推的近四季每股盈餘估計值。',
+        revenueYoY: '營收 YoY：最新月營收相較去年同月的成長率。',
+        cumulativeRevenueYoY: '累計營收 YoY：今年累計營收相較去年同期的成長率。',
+        grossMargin: '毛利率：毛利 / 營收，衡量產品定價能力與成本控制。',
+        roe: 'ROE：淨利 / 股東權益，衡量運用股東資本創造獲利的效率。',
+        debtRatio: '負債比：總負債 / 總資產，衡量財務槓桿與償債壓力。',
+        fcfToNetIncomeRatio: 'FCF / 淨利：自由現金流 / 淨利，衡量獲利轉成現金的程度。',
+        提及熱度: '提及熱度：依貼文提及次數與語氣加權的社群熱度，不是基本面指標。',
+        財報期別: '財報期別：目前使用的最新公開財報年度與季度。',
+        現金流期別: '現金流期別：目前使用的 MOPSFIN 現金流資料期別。',
+        貼文訊號: '貼文訊號：從貼文文字判斷的主要語氣，例如買進、賣出、漲停或觀察。',
+      };
+      return definitions[metricOrLabel] || '';
     }
 
     function compareBySorter(left, right, sorter) {
