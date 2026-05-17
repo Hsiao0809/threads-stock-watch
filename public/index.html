@@ -93,6 +93,10 @@
       font-size: 13px;
       text-align: right;
     }
+    .meta a {
+      color: var(--accent);
+      font-weight: 700;
+    }
     main {
       padding: 20px 0 40px;
     }
@@ -770,7 +774,20 @@
 
     function renderMeta() {
       const source = state.data.source || {};
-      document.getElementById('meta').textContent = `${source.title || source.target || ''}｜更新 ${formatDate(state.data.generatedAt)}`;
+      document.getElementById('meta').innerHTML = `${renderAccountLink(source)}｜更新 ${escapeHtml(formatDate(state.data.generatedAt))}`;
+    }
+
+    function renderAccountLink(source) {
+      const url = source.finalUrl || source.target || '';
+      const label = accountLabel(source);
+      if (!url) return escapeHtml(label);
+      return `<a href="${escapeAttr(url)}" target="_blank" rel="noreferrer">${escapeHtml(label)}</a>`;
+    }
+
+    function accountLabel(source) {
+      if (source.title) return source.title.replace(/\s*•\s*Threads.*$/i, '').trim();
+      if (source.target) return source.target.replace(/^https?:\/\/(?:www\.)?threads\.com\//i, '');
+      return 'Threads 帳號';
     }
 
     function renderSummary() {
