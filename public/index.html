@@ -126,7 +126,7 @@
     }
     .toolbar {
       display: grid;
-      grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
+      grid-template-columns: 1.4fr 0.8fr 0.8fr 0.95fr auto;
       gap: 10px;
       margin-bottom: 16px;
     }
@@ -573,6 +573,12 @@
           <option value="TWSE">上市</option>
           <option value="TPEx">上櫃</option>
         </select>
+        <select id="stock-sort" aria-label="股票列表排序">
+          <option value="latestDesc">最新提及新到舊</option>
+          <option value="latestAsc">最新提及舊到新</option>
+          <option value="countDesc">提及次數高到低</option>
+          <option value="countAsc">提及次數低到高</option>
+        </select>
         <button id="reset-filters" class="reset-filters" type="button">清除篩選</button>
       </div>
 
@@ -615,6 +621,8 @@
             <option value="fundamentalAsc">指標分數低到高</option>
             <option value="mentionDesc">提及熱度高到低</option>
             <option value="mentionAsc">提及熱度低到高</option>
+            <option value="latestMentionDesc">最新提及新到舊</option>
+            <option value="latestMentionAsc">最新提及舊到新</option>
             <option value="priceDesc">收盤價高到低</option>
             <option value="priceAsc">收盤價低到高</option>
             <option value="peRatioDesc">本益比高到低</option>
@@ -666,6 +674,7 @@
       query: '',
       action: '',
       market: '',
+      stockSort: 'latestDesc',
       view: initialView(),
       analysisSort: 'fundamentalDesc',
       analysisGrade: '',
@@ -690,6 +699,10 @@
       });
       document.getElementById('market').addEventListener('change', (event) => {
         state.market = event.target.value;
+        render();
+      });
+      document.getElementById('stock-sort').addEventListener('change', (event) => {
+        state.stockSort = event.target.value;
         render();
       });
       document.getElementById('analysis-sort').addEventListener('change', (event) => {
@@ -825,15 +838,16 @@
     }
 
     function renderStocks(stocks) {
-      document.getElementById('stock-count').textContent = `${stocks.length} 檔`;
-      document.getElementById('stocks').innerHTML = stocks.map((stock) => `
+      const ranked = sortListStocks(stocks);
+      document.getElementById('stock-count').textContent = `${ranked.length} 檔`;
+      document.getElementById('stocks').innerHTML = ranked.map((stock) => `
         <tr data-selected="${stockKey(stock) === state.selectedCode}">
           <td>
             <div class="stock-main">
               ${renderStockName(stock)}
               <button class="stock-row" type="button" data-code="${escapeAttr(stockKey(stock))}" title="只看這檔股票">篩選</button>
             </div>
-            <div class="meta">${escapeHtml(stock.code || '')} ${escapeHtml(stock.market || '')}</div>
+            <div class="meta">${escapeHtml(stock.code || '')} ${escapeHtml(stock.market || '')}｜最新提及 ${escapeHtml(latestMentionLabel(stock))}</div>
           </td>
           <td>${stock.count}</td>
           <td><div class="badges">${renderBadges(Object.keys(stock.actions || {}))}</div></td>
@@ -868,10 +882,24 @@
       `).join('') : '<div class="empty">沒有符合條件的貼文。</div>';
     }
 
+    function sortListStocks(stocks) {
+      const sorters = {
+        latestDesc: { key: 'latestMentionOrder', direction: 'asc' },
+        latestAsc: { key: 'latestMentionOrder', direction: 'desc' },
+        countDesc: { key: 'count', direction: 'desc' },
+        countAsc: { key: 'count', direction: 'asc' },
+      };
+      const sorter = sorters[state.stockSort] || sorters.latestDesc;
+      return stocks
+        .map((stock) => ({ ...stock, latestMentionOrder: latestMentionOrder(stock) }))
+        .sort((left, right) => compareBySorter(left, right, sorter));
+    }
+
     function renderStockAnalysis(stocks) {
       const enriched = [...stocks].map((stock) => ({
         ...stock,
         mentionScore: scoreStock(stock),
+        latestMentionOrder: latestMentionOrder(stock),
         tone: toneLabel(stock),
         fundamentalScore: stock.fundamentals?.analysis?.score ?? -1,
       }));
@@ -902,6 +930,7 @@
             ${renderMetric('財報期別', formatFiscal(stock.fundamentals), 'text')}
             ${renderMetric('現金流期別', stock.fundamentals?.cashflowPeriod || '-', 'text')}
             ${renderMetric('提及熱度', stock.mentionScore, 'number')}
+            ${renderMetric('最新提及', latestMentionLabel(stock), 'text')}
             ${renderMetric('貼文訊號', primaryAction(stock), 'text')}
           </div>
           <div class="badges">${renderBadges(Object.keys(stock.actions || {}))}</div>
@@ -918,6 +947,8 @@
         fundamentalAsc: { key: 'fundamentalScore', direction: 'asc' },
         mentionDesc: { key: 'mentionScore', direction: 'desc' },
         mentionAsc: { key: 'mentionScore', direction: 'asc' },
+        latestMentionDesc: { key: 'latestMentionOrder', direction: 'asc' },
+        latestMentionAsc: { key: 'latestMentionOrder', direction: 'desc' },
         priceDesc: { path: 'fundamentals.price', direction: 'desc' },
         priceAsc: { path: 'fundamentals.price', direction: 'asc' },
         peRatioDesc: { path: 'fundamentals.peRatio', direction: 'desc' },
@@ -1125,6 +1156,78 @@
         || stockKey(left).localeCompare(stockKey(right));
     }
 
+    function latestMentionOrder(stock) {
+      const posts = Array.isArray(stock.posts) ? stock.posts : [];
+      const ranks = posts.map(mentionPostRank).filter(Number.isFinite);
+      return ranks.length ? Math.min(...ranks) : Number.POSITIVE_INFINITY;
+    }
+
+    function latestMentionLabel(stock) {
+      const post = latestMentionPost(stock);
+      return post?.time || '-';
+    }
+
+    function latestMentionPost(stock) {
+      const posts = Array.isArray(stock.posts) ? stock.posts : [];
+      let selected = null;
+      let selectedRank = Number.POSITIVE_INFINITY;
+      for (const post of posts) {
+        const rank = mentionPostRank(post);
+        if (rank < selectedRank) {
+          selected = post;
+          selectedRank = rank;
+        }
+      }
+      return selected || posts[0] || null;
+    }
+
+    function mentionPostRank(post) {
+      const index = Number(post?.index);
+      if (Number.isFinite(index)) return index;
+      return relativeTimeRank(post?.time);
+    }
+
+    function relativeTimeRank(value) {
+      const text = String(value || '').trim();
+      if (!text) return Number.POSITIVE_INFINITY;
+      if (/剛剛|now|just/i.test(text)) return 0;
+
+      const datedRank = absoluteDateRank(text);
+      if (Number.isFinite(datedRank)) return datedRank;
+
+      const match = text.match(/(\d+(?:\.\d+)?)/);
+      const number = match ? Number(match[1]) : NaN;
+      if (!Number.isFinite(number)) return Number.POSITIVE_INFINITY;
+      if (text.includes('秒')) return number / 86400;
+      if (text.includes('分')) return number / 1440;
+      if (text.includes('小時') || text.includes('時')) return number / 24;
+      if (text.includes('天') || text.includes('日')) return number;
+      if (text.includes('週') || text.includes('周')) return number * 7;
+      if (text.includes('月')) return number * 30;
+      if (text.includes('年')) return number * 365;
+      return Number.POSITIVE_INFINITY;
+    }
+
+    function absoluteDateRank(text) {
+      const normalized = text.replace(/[./]/g, '-');
+      let match = normalized.match(/(20\d{2})-(\d{1,2})-(\d{1,2})/);
+      if (match) return daysFromDate(Number(match[1]), Number(match[2]), Number(match[3]));
+      match = text.match(/(\d{1,2})月(\d{1,2})日/);
+      if (!match) return Number.POSITIVE_INFINITY;
+      const now = new Date();
+      let date = new Date(now.getFullYear(), Number(match[1]) - 1, Number(match[2]));
+      if (date.getTime() > now.getTime() + 7 * 86400000) {
+        date = new Date(now.getFullYear() - 1, Number(match[1]) - 1, Number(match[2]));
+      }
+      return Math.max(0, (now.getTime() - date.getTime()) / 86400000);
+    }
+
+    function daysFromDate(year, month, day) {
+      const date = new Date(year, month - 1, day);
+      if (!Number.isFinite(date.getTime())) return Number.POSITIVE_INFINITY;
+      return Math.max(0, (Date.now() - date.getTime()) / 86400000);
+    }
+
     function renderBadges(actions) {
       return actions.map((action) => `<span class="badge ${escapeAttr(action)}">${escapeHtml(labels[action] || action)}</span>`).join('');
     }
@@ -1221,15 +1324,17 @@
       state.query = '';
       state.action = '';
       state.market = '';
+      state.stockSort = 'latestDesc';
       state.selectedCode = '';
       document.getElementById('search').value = '';
       document.getElementById('action').value = '';
       document.getElementById('market').value = '';
+      document.getElementById('stock-sort').value = state.stockSort;
       render();
     }
 
     function renderFilterState() {
-      const isFiltered = Boolean(state.query || state.action || state.market || state.selectedCode);
+      const isFiltered = Boolean(state.query || state.action || state.market || state.selectedCode || state.stockSort !== 'latestDesc');
       document.getElementById('reset-filters').disabled = !isFiltered;
     }
 

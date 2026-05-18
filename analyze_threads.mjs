@@ -699,6 +699,7 @@ function aggregateStocks(posts) {
       item.posts.push({
         url: post.url,
         time: post.time,
+        index: post.index,
         topic: post.topic,
         aliases: mention.aliases,
         actions: mention.actions,
