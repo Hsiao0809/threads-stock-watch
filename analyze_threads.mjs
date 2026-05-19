@@ -8,6 +8,7 @@ const aliasesPath = resolve(args.aliases || 'data/stock_aliases.json');
 const universePath = resolve(args.universe || 'data/stock_universe.json');
 const fundamentalsPath = resolve(args.fundamentals || 'data/fundamentals.json');
 const FINANCIAL_CATEGORIES = ['basi', 'bd', 'ci', 'fh', 'ins', 'mim'];
+const MIN_UNIVERSE_RECORDS = 1000;
 
 const raw = JSON.parse(readFileSync(inputPath, 'utf8'));
 const aliases = existsSync(aliasesPath) ? JSON.parse(readFileSync(aliasesPath, 'utf8')) : [];
@@ -376,16 +377,26 @@ async function loadUniverse({ aliases, universePath: targetPath, refresh }) {
 
   try {
     const official = await fetchOfficialUniverse();
+    assertUniverseCoverage(official, 'Official stock universe');
     const merged = mergeUniverse(official, aliases);
+    assertUniverseCoverage(merged, 'Merged stock universe');
     mkdirSync(dirname(targetPath), { recursive: true });
     writeFileSync(targetPath, `${JSON.stringify(merged, null, 2)}\n`, 'utf8');
     return merged;
   } catch (error) {
     console.warn(`Official stock universe refresh failed: ${error.message}`);
     if (existsSync(targetPath)) {
-      return mergeUniverse(JSON.parse(readFileSync(targetPath, 'utf8')), aliases);
+      const cached = mergeUniverse(JSON.parse(readFileSync(targetPath, 'utf8')), aliases);
+      if (cached.length >= MIN_UNIVERSE_RECORDS) return cached;
+      console.warn(`Cached stock universe is too small (${cached.length}); falling back to manual aliases only.`);
     }
     return normalizeUniverse(aliases);
+  }
+}
+
+function assertUniverseCoverage(records, label) {
+  if (records.length < MIN_UNIVERSE_RECORDS) {
+    throw new Error(`${label} looks partial: ${records.length} records`);
   }
 }
 
