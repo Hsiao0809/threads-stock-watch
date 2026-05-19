@@ -1,23 +1,25 @@
 {
-  "generatedAt": "2026-05-16T22:19:55.778Z",
+  "generatedAt": "2026-05-19T03:54:44.867Z",
   "source": {
     "target": "https://www.threads.com/@evachien.chien",
     "finalUrl": "https://www.threads.com/@evachien.chien",
     "title": "Olivia Chien（@evachien.chien） • Threads，暢所欲言",
-    "fetchedAt": "2026-05-16T22:19:41.194Z",
-    "postsFound": 4
+    "fetchedAt": "2026-05-19T03:54:31.693Z",
+    "postsFound": 4,
+    "cachedPosts": 7
   },
   "summary": {
-    "totalPosts": 4,
-    "postsWithStocks": 3,
-    "uniqueStocks": 18,
+    "totalPosts": 7,
+    "postsWithStocks": 4,
+    "uniqueStocks": 22,
     "topStocks": [
       {
         "code": "3665",
         "name": "貿聯-KY",
-        "count": 3,
+        "count": 4,
         "actions": {
-          "buy": 3,
+          "buy": 4,
+          "limitUp": 1,
           "sell": 1,
           "limitDown": 2,
           "watch": 1
@@ -84,6 +86,15 @@
         }
       },
       {
+        "code": "2383",
+        "name": "台光電",
+        "count": 1,
+        "actions": {
+          "buy": 1,
+          "limitUp": 1
+        }
+      },
+      {
         "code": "6291",
         "name": "沛亨",
         "count": 1,
@@ -99,28 +110,19 @@
         "actions": {
           "limitUp": 1
         }
-      },
-      {
-        "code": "6223",
-        "name": "旺矽",
-        "count": 1,
-        "actions": {
-          "limitUp": 1,
-          "watch": 1
-        }
       }
     ],
     "actionTotals": {
-      "buy": 13,
+      "buy": 18,
+      "limitUp": 13,
       "sell": 6,
       "limitDown": 5,
       "watch": 9,
-      "regret": 3,
-      "limitUp": 8
+      "regret": 3
     },
-    "fundamentalsCoverage": 18,
-    "qualityMetricsCoverage": 18,
-    "cashflowCoverage": 18
+    "fundamentalsCoverage": 22,
+    "qualityMetricsCoverage": 22,
+    "cashflowCoverage": 22
   },
   "dataSources": {
     "price": [
@@ -156,17 +158,33 @@
       "code": "3665",
       "name": "貿聯-KY",
       "market": "TWSE",
-      "count": 3,
+      "count": 4,
       "actions": {
-        "buy": 3,
+        "buy": 4,
+        "limitUp": 1,
         "sell": 1,
         "limitDown": 2,
         "watch": 1
       },
       "posts": [
         {
+          "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+          "time": "22小時",
+          "index": 0,
+          "topic": "股票日常",
+          "aliases": [
+            "貿聯"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "snippet": "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴"
+        },
+        {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "貿聯"
@@ -180,6 +198,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "貿聯"
@@ -194,6 +213,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "貿聯",
@@ -210,13 +230,13 @@
         "code": "3665",
         "name": "貿聯-KY",
         "market": "TWSE",
-        "price": 2095,
-        "change": -155,
-        "priceDate": "1150515",
-        "peRatio": 42.28,
-        "dividendYield": 0.72,
-        "pbRatio": 8.76,
-        "valuationDate": "1150515",
+        "price": 2025,
+        "change": -70,
+        "priceDate": "1150518",
+        "peRatio": 40.87,
+        "dividendYield": 0.74,
+        "pbRatio": 8.47,
+        "valuationDate": "1150518",
         "industry": "其他電子業",
         "fiscalYear": "115",
         "fiscalQuarter": "1",
@@ -224,13 +244,13 @@
         "revenue": 20863649,
         "operatingProfit": 3108361,
         "netIncome": 2273476,
-        "financialDate": "1150517",
+        "financialDate": "1150519",
         "monthlyRevenue": 7382955,
         "revenueYoY": 18.54291992756683,
         "monthlyRevenueYoY": 18.54291992756683,
         "cumulativeRevenueYoY": 25.374406359641693,
         "revenueMonth": "11504",
-        "revenueReportDate": "1150516",
+        "revenueReportDate": "1150517",
         "grossProfit": 6001841,
         "grossMargin": 28.77,
         "netIncomeParent": 2273834,
@@ -239,7 +259,7 @@
         "totalEquity": 46636528,
         "equityParent": 46639663,
         "bookValuePerShare": 239.08,
-        "balanceSheetDate": "1150517",
+        "balanceSheetDate": "1150519",
         "operatingCashflow": 250919,
         "investingCashflow": -1175371,
         "freeCashFlowApprox": -924452,
@@ -287,6 +307,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "大立光"
@@ -300,6 +321,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "大立光"
@@ -392,6 +414,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "欣興"
@@ -404,6 +427,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "欣興"
@@ -492,6 +516,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "高技"
@@ -506,6 +531,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "高技"
@@ -599,6 +625,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "健策"
@@ -609,6 +636,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "健策"
@@ -705,6 +733,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "新應材"
@@ -718,6 +747,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "新應材"
@@ -813,6 +843,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "聯亞"
@@ -826,6 +857,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "聯亞"
@@ -908,6 +940,99 @@
       }
     },
     {
+      "code": "2383",
+      "name": "台光電",
+      "market": "TWSE",
+      "count": 1,
+      "actions": {
+        "buy": 1,
+        "limitUp": 1
+      },
+      "posts": [
+        {
+          "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+          "time": "22小時",
+          "index": 0,
+          "topic": "股票日常",
+          "aliases": [
+            "台光電"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "snippet": "顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開"
+        }
+      ],
+      "fundamentals": {
+        "code": "2383",
+        "name": "台光電",
+        "market": "TWSE",
+        "price": 4545,
+        "change": -70,
+        "priceDate": "1150518",
+        "peRatio": 98.59,
+        "dividendYield": 0.55,
+        "pbRatio": 33.97,
+        "valuationDate": "1150518",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 14.9,
+        "revenue": 33067261,
+        "operatingProfit": 7128470,
+        "netIncome": 5338777,
+        "financialDate": "1150519",
+        "monthlyRevenue": 13923687,
+        "revenueYoY": 93.61728577894678,
+        "monthlyRevenueYoY": 93.61728577894678,
+        "cumulativeRevenueYoY": 62.73574575073765,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150517",
+        "grossProfit": 9729153,
+        "grossMargin": 29.42,
+        "netIncomeParent": 5339793,
+        "totalAssets": 130976723,
+        "totalLiabilities": 83055788,
+        "totalEquity": 47920935,
+        "equityParent": 47942628,
+        "bookValuePerShare": 133.8,
+        "balanceSheetDate": "1150519",
+        "operatingCashflow": 2703047,
+        "investingCashflow": -5671576,
+        "freeCashFlowApprox": -2968529,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
+        "estimatedTtmEps": 46.1,
+        "annualizedQuarterlyEps": 59.6,
+        "roe": 44.55,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 63.41,
+        "fcfToNetIncomeRatio": -55.59,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps",
+            "revenue-growth",
+            "high-roe",
+            "negative-fcf"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 14.9",
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 93.61728577894678% ，成長動能明顯",
+            "ROE 約 44.55% ，股東權益報酬率偏強",
+            "FCF/淨利約 -55.59% ，自由現金流為負"
+          ],
+          "score": 52
+        }
+      }
+    },
+    {
       "code": "6291",
       "name": "沛亨",
       "market": "TPEx",
@@ -920,6 +1045,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "沛亨"
@@ -1014,6 +1140,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "旺宏"
@@ -1105,6 +1232,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "旺矽"
@@ -1190,6 +1318,94 @@
       }
     },
     {
+      "code": "1717",
+      "name": "長興",
+      "market": "TWSE",
+      "count": 1,
+      "actions": {
+        "buy": 1,
+        "limitUp": 1
+      },
+      "posts": [
+        {
+          "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+          "time": "22小時",
+          "index": 0,
+          "topic": "股票日常",
+          "aliases": [
+            "長興"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "snippet": "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧"
+        }
+      ],
+      "fundamentals": {
+        "code": "1717",
+        "name": "長興",
+        "market": "TWSE",
+        "price": 73.8,
+        "change": -4.9,
+        "priceDate": "1150518",
+        "peRatio": 49.86,
+        "dividendYield": 1.36,
+        "pbRatio": 3,
+        "valuationDate": "1150518",
+        "industry": "化學工業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 0.37,
+        "revenue": 10243036,
+        "operatingProfit": 534996,
+        "netIncome": 429777,
+        "financialDate": "1150519",
+        "monthlyRevenue": 4233389,
+        "revenueYoY": 12.99161381931544,
+        "monthlyRevenueYoY": 12.99161381931544,
+        "cumulativeRevenueYoY": 4.846213892454235,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150517",
+        "grossProfit": 2269956,
+        "grossMargin": 22.16,
+        "netIncomeParent": 428283,
+        "totalAssets": 62816878,
+        "totalLiabilities": 32795852,
+        "totalEquity": 30021026,
+        "equityParent": 28806540,
+        "bookValuePerShare": 24.57,
+        "balanceSheetDate": "1150519",
+        "operatingCashflow": 727346,
+        "investingCashflow": -228303,
+        "freeCashFlowApprox": 499043,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
+        "estimatedTtmEps": 1.48,
+        "annualizedQuarterlyEps": 1.48,
+        "roe": 5.95,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 52.21,
+        "fcfToNetIncomeRatio": 116.52,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "positive-eps",
+            "cash-conversion"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "最新季度 EPS 為 0.37",
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 12.99161381931544%",
+            "FCF/淨利約 116.52% ，獲利現金轉換佳"
+          ],
+          "score": 60
+        }
+      }
+    },
+    {
       "code": "8046",
       "name": "南電",
       "market": "TWSE",
@@ -1199,6 +1415,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "南電"
@@ -1288,6 +1505,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
           "time": "1天",
+          "index": 4,
           "topic": "股票日常",
           "aliases": [
             "茂綸"
@@ -1370,6 +1588,98 @@
       }
     },
     {
+      "code": "3680",
+      "name": "家登",
+      "market": "TPEx",
+      "count": 1,
+      "actions": {
+        "buy": 1,
+        "limitUp": 1
+      },
+      "posts": [
+        {
+          "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+          "time": "22小時",
+          "index": 0,
+          "topic": "股票日常",
+          "aliases": [
+            "家登"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "snippet": "\ude06😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開心 沒有大撿便宜成功 喝開心果奶蓋 開心 再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家"
+        }
+      ],
+      "fundamentals": {
+        "code": "3680",
+        "name": "家登",
+        "market": "TPEx",
+        "price": 544,
+        "change": -24,
+        "priceDate": "1150518",
+        "peRatio": 55.62,
+        "dividendYield": 1.27,
+        "pbRatio": 4.65,
+        "dividendPerShare": 6.89733964,
+        "valuationDate": "1150518",
+        "industry": "半導體業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 2.55,
+        "revenue": 1865049,
+        "operatingProfit": 291432,
+        "netIncome": 278153,
+        "financialDate": "1150518",
+        "monthlyRevenue": 885957,
+        "revenueYoY": 52.739619752984254,
+        "monthlyRevenueYoY": 52.739619752984254,
+        "cumulativeRevenueYoY": 20.16580656803387,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150517",
+        "grossProfit": 795126,
+        "grossMargin": 42.63,
+        "netIncomeParent": 245148,
+        "totalAssets": 26027409,
+        "totalLiabilities": 13166607,
+        "totalEquity": 12860802,
+        "equityParent": 11229652,
+        "bookValuePerShare": 116.92,
+        "balanceSheetDate": "1150518",
+        "operatingCashflow": 356817,
+        "investingCashflow": 237306,
+        "freeCashFlowApprox": 594123,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
+        "estimatedTtmEps": 9.78,
+        "annualizedQuarterlyEps": 10.2,
+        "roe": 8.73,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 50.59,
+        "fcfToNetIncomeRatio": 242.35,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "positive-eps",
+            "revenue-growth",
+            "high-margin",
+            "cash-conversion"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "最新季度 EPS 為 2.55",
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年增 52.739619752984254% ，成長動能明顯",
+            "毛利率 42.63% ，產品或定價能力較佳",
+            "FCF/淨利約 242.35% ，獲利現金轉換佳"
+          ],
+          "score": 69
+        }
+      }
+    },
+    {
       "code": "3443",
       "name": "創意",
       "market": "TWSE",
@@ -1381,6 +1691,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "創意"
@@ -1471,6 +1782,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "智邦"
@@ -1564,6 +1876,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "華邦電"
@@ -1644,6 +1957,97 @@
       }
     },
     {
+      "code": "2313",
+      "name": "華通",
+      "market": "TWSE",
+      "count": 1,
+      "actions": {
+        "buy": 1,
+        "limitUp": 1
+      },
+      "posts": [
+        {
+          "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+          "time": "22小時",
+          "index": 0,
+          "topic": "股票日常",
+          "aliases": [
+            "華通"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "snippet": "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325"
+        }
+      ],
+      "fundamentals": {
+        "code": "2313",
+        "name": "華通",
+        "market": "TWSE",
+        "price": 259,
+        "change": 23.5,
+        "priceDate": "1150518",
+        "peRatio": 45.68,
+        "dividendYield": 1.08,
+        "pbRatio": 6.59,
+        "valuationDate": "1150518",
+        "industry": "電子零組件業",
+        "fiscalYear": "115",
+        "fiscalQuarter": "1",
+        "quarterlyEps": 1.26,
+        "revenue": 19548062,
+        "operatingProfit": 1938218,
+        "netIncome": 1504169,
+        "financialDate": "1150519",
+        "monthlyRevenue": 6315284,
+        "revenueYoY": -2.861974380401858,
+        "monthlyRevenueYoY": -2.861974380401858,
+        "cumulativeRevenueYoY": 11.330095105613454,
+        "revenueMonth": "11504",
+        "revenueReportDate": "1150517",
+        "grossProfit": 3515178,
+        "grossMargin": 17.98,
+        "netIncomeParent": 1504169,
+        "totalAssets": 93452900,
+        "totalLiabilities": 46599014,
+        "totalEquity": 46853886,
+        "equityParent": 46853886,
+        "bookValuePerShare": 39.31,
+        "balanceSheetDate": "1150519",
+        "operatingCashflow": 1586943,
+        "investingCashflow": -1696839,
+        "freeCashFlowApprox": -109896,
+        "cashflowPeriod": "2026Q1",
+        "cashflowMethod": "營業活動現金流 + 投資活動現金流，作為 FCF 近似值",
+        "cashflowDataSource": "https://mopsfin.twse.com.tw/compare/data",
+        "estimatedTtmEps": 5.67,
+        "annualizedQuarterlyEps": 5.04,
+        "roe": 12.84,
+        "roeBasis": "年化，依第 1 季累計獲利估算",
+        "debtRatio": 49.86,
+        "fcfToNetIncomeRatio": -7.31,
+        "analysis": {
+          "flags": [
+            "high-pe",
+            "high-pb",
+            "positive-eps",
+            "revenue-decline",
+            "negative-fcf"
+          ],
+          "notes": [
+            "本益比偏高，市場可能反映較高成長期待",
+            "股價淨值比較高，通常需要較強 ROE 或成長支撐",
+            "最新季度 EPS 為 1.26",
+            "有現金殖利率，但不是高息型訊號",
+            "月營收年減 2.861974380401858% ，需確認衰退原因",
+            "FCF/淨利約 -7.31% ，自由現金流為負"
+          ],
+          "score": 31
+        }
+      }
+    },
+    {
       "code": "8299",
       "name": "群聯",
       "market": "TPEx",
@@ -1656,6 +2060,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "群聯"
@@ -1750,6 +2155,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
           "time": "3天",
+          "index": 6,
           "topic": "股票日常",
           "aliases": [
             "嘉澤"
@@ -1839,6 +2245,7 @@
         {
           "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
           "time": "2天",
+          "index": 5,
           "topic": "股票日常",
           "aliases": [
             "鴻勁"
@@ -1923,14 +2330,115 @@
   "posts": [
     {
       "index": 0,
+      "url": "https://www.threads.com/@evachien.chien/post/DYd_rLBEQJ0",
+      "topic": "股票日常",
+      "time": "22小時",
+      "text": "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開心 沒有大撿便宜成功 喝開心果奶蓋 開心 好胖喔😆",
+      "mentions": [
+        {
+          "code": "2383",
+          "name": "台光電",
+          "market": "TWSE",
+          "aliases": [
+            "台光電"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "contexts": [
+            "顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開"
+          ]
+        },
+        {
+          "code": "2313",
+          "name": "華通",
+          "market": "TWSE",
+          "aliases": [
+            "華通"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "contexts": [
+            "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325"
+          ]
+        },
+        {
+          "code": "1717",
+          "name": "長興",
+          "market": "TWSE",
+          "aliases": [
+            "長興"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "contexts": [
+            "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧"
+          ]
+        },
+        {
+          "code": "3665",
+          "name": "貿聯-KY",
+          "market": "TWSE",
+          "aliases": [
+            "貿聯"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "contexts": [
+            "今天亮一顆燈💡 「華通」漲停 還好今天沒跌停😆😆😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴"
+          ]
+        },
+        {
+          "code": "3680",
+          "name": "家登",
+          "market": "TPEx",
+          "aliases": [
+            "家登"
+          ],
+          "actions": [
+            "buy",
+            "limitUp"
+          ],
+          "contexts": [
+            "\ude06😆慶幸 盤前有猜到開低走高的局 全部設一設再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開心 沒有大撿便宜成功 喝開心果奶蓋 開心",
+            "再上班 結果設太低 沒嚐到甜頭 買 「長興」74 「貿聯」2035 「台光電」4325（接的漂亮🤩） 5/11「家登」漲停616 我還跟*叫我400以下閉眼買家登的學弟*說 他說妳這跌到550也不虧 真的世紀烏鴉嘴 🐦‍⬛ 今天不開心 沒有大撿便宜成功 喝開心果奶蓋 開心 好胖喔😆"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "url": "https://www.threads.com/@evachien.chien/post/DYdo-5vkUg2",
+      "topic": "香菜控",
+      "time": "1天",
+      "text": "我是多力多滋香菜口味愛好者，看到樂子推出美式香菜季，趕快訂位來朝聖！ 我點花生香菜奶昔，好好喝，獨特鹹甜口味，真的很絕配！ 還有阿米哥炒蛋，餅皮包著多力多滋和炒蛋吃，真的很美味😋 香菜控趕快一起來吃喔！ #樂子#多力多滋#香菜控",
+      "mentions": []
+    },
+    {
+      "index": 2,
+      "url": "https://www.threads.com/@evachien.chien/post/DYb1QOoER_B",
+      "topic": "朱銘美術館",
+      "time": "1天",
+      "text": "5/18國際博物館日 而朱銘美術館開放5/16.17兩日免費參觀 一年365天，要說喜歡哪幾天，5/18一定是其中一天，我去年參觀富邦美術館，再前兩年都去故宮。可以再查查，明天有空的話，可以去參觀博物館喔！",
+      "mentions": []
+    },
+    {
+      "index": 3,
       "url": "https://www.threads.com/@evachien.chien/post/DYahFWMk5lm",
       "topic": "股票日常",
-      "time": "1小時",
+      "time": "2天",
       "text": "我之前文章有提到目前散熱和ABF跌，會不會真的就不需要CoWoS？ 但事實上，CoWoS目前仍是AI晶片主流封裝技術，且技術成熟、良率穩定，短期內難以被完全取代。而CoWoP目前仍處於開發中的狀態，這篇文章，有提到玻璃基板的文章，寫的很詳細，引用給股友們了解！此外版主Benjamin 平常也常常會分析股市AI的議題，言之有物，大家可以追蹤一下，以利知識增長👍",
       "mentions": []
     },
     {
-      "index": 1,
+      "index": 4,
       "url": "https://www.threads.com/@evachien.chien/post/DYWXiZmEYh8",
       "topic": "股票日常",
       "time": "1天",
@@ -2048,7 +2556,7 @@
       ]
     },
     {
-      "index": 2,
+      "index": 5,
       "url": "https://www.threads.com/@evachien.chien/post/DYT2I87EYGC",
       "topic": "股票日常",
       "time": "2天",
@@ -2251,7 +2759,7 @@
       ]
     },
     {
-      "index": 3,
+      "index": 6,
       "url": "https://www.threads.com/@evachien.chien/post/DYRGs6ukS4U",
       "topic": "股票日常",
       "time": "3天",

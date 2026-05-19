@@ -451,7 +451,7 @@ function normalizeUniverse(records) {
       const name = clean(record.name);
       const code = clean(record.code);
       const aliases = [...new Set([name, ...(record.aliases || []), ...buildAliases(name)].map(clean).filter(Boolean))]
-        .filter((alias) => alias.length >= 2);
+        .filter((alias) => alias.length >= 2 && !isUnsafeAlias(alias, name));
       return {
         code,
         name,
@@ -464,11 +464,15 @@ function normalizeUniverse(records) {
 
 function buildAliases(name) {
   const aliases = [name];
-  for (const pattern of [/-KY$/i, /\*$/, /－KY$/i]) {
+  for (const pattern of [/-KY$/i, /－KY$/i]) {
     const stripped = name.replace(pattern, '');
     if (stripped !== name) aliases.push(stripped);
   }
   return aliases;
+}
+
+function isUnsafeAlias(alias, name) {
+  return name.endsWith('*') && alias === name.slice(0, -1);
 }
 
 function analyze(rawInput, universe, fundamentals = {}) {
